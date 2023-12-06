@@ -2,7 +2,7 @@ const Accordian = ({ header, body }) => {
   return (
     <div class="m-2 space-y-2">
       <div
-        class="group flex flex-col gap-2 rounded-lg bg-black p-5 text-white overflow-scroll"
+        class="group flex flex-col gap-2 rounded-lg bg-black p-5 text-white group-focus:overflow-scroll"
         tabindex="1"
       >
         <div class="flex cursor-pointer items-center justify-between">

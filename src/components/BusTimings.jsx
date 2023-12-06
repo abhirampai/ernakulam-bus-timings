@@ -9,6 +9,28 @@ const BusTimings = () => {
   const to = useSignal("");
   const filteredBusResult = useSignal({});
 
+  const filteredSchedule = (
+    schedules,
+    start = from.value.trim().toUpperCase(),
+    destination = to.value.trim().toUpperCase()
+  ) =>
+    schedules.filter((schedule) => {
+      const touchingStartDestination =
+        schedule.stations.filter(({ station }) => station.includes(start))
+          .length > 0;
+
+      const touchingEndDestination =
+        schedule.stations.filter(({ station }) => station.includes(destination))
+          .length > 0;
+
+      return touchingStartDestination && touchingEndDestination;
+    });
+
+  const filteredBuses = (buses, start, destination) =>
+    buses.filter(
+      (bus) => filteredSchedule(bus.schedule, start, destination).length > 0
+    );
+
   const sumbitForm = (e) => {
     e.preventDefault();
 
@@ -26,7 +48,7 @@ const BusTimings = () => {
         0;
       return touchingStartDestination && touchingEndDestination;
     });
-    filteredBusResult.value = buses;
+    filteredBusResult.value = filteredBuses(buses, start, destination);
   };
 
   if (isLoading) {
@@ -73,8 +95,7 @@ const BusTimings = () => {
       {filteredBusResult.value.length > 0 && (
         <List
           buses={filteredBusResult.value}
-          start={from.value.trim().toUpperCase()}
-          destination={to.value.trim().toUpperCase()}
+          filteredSchedule={filteredSchedule}
         />
       )}
     </>
