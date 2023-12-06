@@ -12,6 +12,7 @@ const removeDuplicates = (arr) => {
 
 const useGetBusData = () =>
   useQuery("bus-timings", getBusTimings, {
+    cacheTime: 86400000,
     select: ({ data }) => {
       return {
         busSchedules: data.busSchedules,
