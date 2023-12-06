@@ -13,18 +13,19 @@ const Accordian = ({ header, body }) => {
     <div className="m-2 space-y-2">
       <div
         className={classNames(
-          "group flex flex-col gap-2 rounded-lg bg-black p-5 text-white",
+          "group flex flex-col gap-2 rounded-lg bg-black p-5 text-white cursor-pointer",
           {
             "overflow-scroll": expandClass.value,
+          },
+          {
+            "overflow-hidden": !expandClass.value,
           }
         )}
         tabIndex="1"
         ref={accordianRef}
+        onClick={onClickAccordian}
       >
-        <div
-          className="flex cursor-pointer items-center justify-between"
-          onClick={onClickAccordian}
-        >
+        <div className="flex cursor-pointer items-center justify-between">
           <span>{header}</span>
           <img
             alt="expand or collapse button"
@@ -42,7 +43,7 @@ const Accordian = ({ header, body }) => {
                 expandClass.value,
             },
             {
-              "hidden": !expandClass.value,
+              "invisible -z-10 h-0": !expandClass.value,
             }
           )}
         >
