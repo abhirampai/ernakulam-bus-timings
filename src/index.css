@@ -9,9 +9,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  @media (prefers-color-scheme: dark) {
+    background-color: black;
+  }
 }
 
-code {
+body code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
@@ -40,4 +44,11 @@ tfoot th {
 
 td {
   text-align: center;
+}
+
+.expand-collapse-icon {
+ @media (prefers-color-scheme: dark) {
+  filter: grayscale(100%);   
+  -webkit-filter: invert(100%);
+ }
 }

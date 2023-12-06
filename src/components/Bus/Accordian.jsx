@@ -13,7 +13,7 @@ const Accordian = ({ header, body }) => {
     <div className="m-2 space-y-2">
       <div
         className={classNames(
-          "group flex flex-col gap-2 rounded-lg bg-black p-5 text-white cursor-pointer",
+          "group flex flex-col gap-2 rounded-lg bg-black p-5 text-white dark:bg-white dark:text-gray-400 cursor-pointer",
           {
             "overflow-scroll": expandClass.value,
           },
@@ -30,7 +30,7 @@ const Accordian = ({ header, body }) => {
           <img
             alt="expand or collapse button"
             src="https://upload.wikimedia.org/wikipedia/commons/9/96/Chevron-icon-drop-down-menu-WHITE.png"
-            className={classNames("h-2 w-3 transition-all duration-500", {
+            className={classNames("h-2 w-3 transition-all duration-500 expand-collapse-icon", {
               "-rotate-180": expandClass.value,
             })}
           />
