@@ -6,8 +6,8 @@ const getBusTimings = () =>
     "https://raw.githubusercontent.com/amith-vp/Kerala-Private-Bus-Timing/main/ernakulam.json"
   );
 
-const removeDuplicates = (arr) => {
-  return arr.filter((item, index) => arr.indexOf(item) === index);
+const removeDuplicatesAndSort = (arr) => {
+  return arr.filter((item, index) => arr.indexOf(item) === index).sort();
 };
 
 const useGetBusData = () =>
@@ -16,7 +16,7 @@ const useGetBusData = () =>
     select: ({ data }) => {
       return {
         busSchedules: data.busSchedules,
-        routes: removeDuplicates(
+        routes: removeDuplicatesAndSort(
           data.busSchedules.map((route) => route.route).flat()
         ),
       };
