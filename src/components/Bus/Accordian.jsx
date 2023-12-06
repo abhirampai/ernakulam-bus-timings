@@ -13,7 +13,7 @@ const Accordian = ({ header, body }) => {
     <div className="m-2 space-y-2">
       <div
         className={classNames(
-          "group flex flex-col gap-2 rounded-lg bg-black p-5 text-white dark:bg-white dark:text-gray-400 cursor-pointer",
+          "group flex flex-col gap-2 rounded-lg bg-black p-5 text-white dark:bg-gray-200 dark:text-gray-400 cursor-pointer",
           {
             "overflow-scroll": expandClass.value,
           },

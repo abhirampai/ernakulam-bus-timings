@@ -19,13 +19,17 @@ const Table = ({ data, columns }) => {
   return (
     <div className="p-2 dark:text-gray-700">
       <div className="h-2" />
-      <table className="p-5 w-full">
+      <table className="p-5 w-full dark:border-black">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
+            <tr key={headerGroup.id} className="dark:border-black">
               {headerGroup.headers.map((header) => {
                 return (
-                  <th key={header.id} colSpan={header.colSpan}>
+                  <th
+                    key={header.id}
+                    colSpan={header.colSpan}
+                    className="dark:border-black"
+                  >
                     {header.isPlaceholder ? null : (
                       <div>
                         {flexRender(
@@ -43,10 +47,10 @@ const Table = ({ data, columns }) => {
         <tbody>
           {table.getRowModel().rows.map((row) => {
             return (
-              <tr key={row.id}>
+              <tr key={row.id} className="dark:border-black">
                 {row.getVisibleCells().map((cell) => {
                   return (
-                    <td key={cell.id} className="border">
+                    <td key={cell.id} className="border dark:border-black">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
