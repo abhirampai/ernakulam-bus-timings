@@ -3,7 +3,7 @@ import Show from "./Show";
 const List = ({ buses, filteredSchedule }) => {
   return (
     <div className="p-5">
-      <div className="text-lg text-semibold">Found {buses.length} buses</div>
+      <div className="text-lg text-semibold text-center">Found {buses.length} buses</div>
       {buses.map((bus, idx) => (
         <Show
           key={idx}

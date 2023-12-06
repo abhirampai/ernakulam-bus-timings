@@ -6,7 +6,7 @@ const queryClient = new QueryClient();
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="text-3xl font-bold p-5">Ernakulam Bus Timings</div>
+      <div className="text-3xl font-bold p-5 text-center">Ernakulam Bus Timings</div>
       <BusTimings />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

@@ -19,7 +19,7 @@ const Table = ({ data, columns }) => {
   return (
     <div className="p-2">
       <div className="h-2" />
-      <table className="w-full">
+      <table className="p-5 w-full">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
