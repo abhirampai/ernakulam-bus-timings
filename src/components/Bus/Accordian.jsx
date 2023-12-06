@@ -5,7 +5,7 @@ import classNames from "classnames";
 const Accordian = ({ header, body }) => {
   const expandClass = useSignal(false);
   const accordianRef = useRef(null);
-  const onClickAccordian = (e) => {
+  const onClickAccordian = () => {
     expandClass.value = expandClass.value ? false : true;
   };
 

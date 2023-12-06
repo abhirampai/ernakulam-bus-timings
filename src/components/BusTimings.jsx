@@ -10,20 +10,17 @@ const BusTimings = () => {
   const filteredBusResult = useSignal(null);
 
   const parseTime = (time) => {
-    // Split the time string into hours, minutes, and AM/PM
     const timeComponents = time.split(/[\s:]+/);
     let hours = parseInt(timeComponents[0], 10);
     const minutes = parseInt(timeComponents[1], 10);
     const period = timeComponents[2].toLowerCase();
 
-    // Adjust hours based on AM/PM
     if (period === "pm" && hours < 12) {
       hours += 12;
     } else if (period === "am" && hours === 12) {
       hours = 0;
     }
 
-    // Create a new Date object with the current date and the extracted time
     const currentDate = new Date();
     return new Date(
       currentDate.getFullYear(),
