@@ -1,19 +1,51 @@
+import { useSignal } from "@preact/signals-react";
+import { useRef } from "react";
+import classNames from "classnames";
+
 const Accordian = ({ header, body }) => {
+  const expandClass = useSignal(false);
+  const accordianRef = useRef(null);
+  const onClickAccordian = (e) => {
+    expandClass.value = expandClass.value ? false : true;
+  };
+
   return (
-    <div class="m-2 space-y-2">
+    <div className="m-2 space-y-2">
       <div
-        class="group flex flex-col gap-2 rounded-lg bg-black p-5 text-white group-focus:overflow-scroll"
-        tabindex="1"
+        className={classNames(
+          "group flex flex-col gap-2 rounded-lg bg-black p-5 text-white",
+          {
+            "overflow-scroll": expandClass.value,
+          }
+        )}
+        tabIndex="1"
+        ref={accordianRef}
       >
-        <div class="flex cursor-pointer items-center justify-between">
+        <div
+          className="flex cursor-pointer items-center justify-between"
+          onClick={onClickAccordian}
+        >
           <span>{header}</span>
           <img
             alt="expand or collapse button"
             src="https://upload.wikimedia.org/wikipedia/commons/9/96/Chevron-icon-drop-down-menu-WHITE.png"
-            class="h-2 w-3 transition-all duration-500 group-focus:-rotate-180"
+            className={classNames("h-2 w-3 transition-all duration-500", {
+              "-rotate-180": expandClass.value,
+            })}
           />
         </div>
-        <div class="invisible h-auto max-h-0 items-center opacity-0 transition-all group-focus:visible group-focus:max-h-full group-focus:opacity-100 group-focus:duration-1000 border-t border-t-zinc-200">
+        <div
+          className={classNames(
+            "h-auto max-h-0 items-center opacity-0 transition-all",
+            {
+              "visible max-h-full opacity-100 duration-1000 border-t border-t-zinc-200":
+                expandClass.value,
+            },
+            {
+              "invisible -z-20": !expandClass.value,
+            }
+          )}
+        >
           {body}
         </div>
       </div>
