@@ -9,21 +9,54 @@ const BusTimings = () => {
   const to = useSignal("");
   const filteredBusResult = useSignal(null);
 
+  const parseTime = (time) => {
+    // Split the time string into hours, minutes, and AM/PM
+    const timeComponents = time.split(/[\s:]+/);
+    let hours = parseInt(timeComponents[0], 10);
+    const minutes = parseInt(timeComponents[1], 10);
+    const period = timeComponents[2].toLowerCase();
+
+    // Adjust hours based on AM/PM
+    if (period === "pm" && hours < 12) {
+      hours += 12;
+    } else if (period === "am" && hours === 12) {
+      hours = 0;
+    }
+
+    // Create a new Date object with the current date and the extracted time
+    const currentDate = new Date();
+    return new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate(),
+      hours,
+      minutes
+    );
+  };
+
   const filteredSchedule = (
     schedules,
     start = from.value.trim().toUpperCase(),
     destination = to.value.trim().toUpperCase()
   ) =>
     schedules.filter((schedule) => {
-      const touchingStartDestination =
-        schedule.stations.filter(({ station }) => station.includes(start))
-          .length > 0;
+      const touchingStartDestination = schedule.stations.find(
+        ({ station, arrivalTime }) =>
+          station.includes(start) && parseTime(arrivalTime) > new Date()
+      );
 
-      const touchingEndDestination =
-        schedule.stations.filter(({ station }) => station.includes(destination))
-          .length > 0;
+      const touchingEndDestination = schedule.stations.find(({ station }) =>
+        station.includes(destination)
+      );
 
-      return touchingStartDestination && touchingEndDestination;
+      if (
+        touchingStartDestination?.arrivalTime <
+        touchingEndDestination?.arrivalTime
+      ) {
+        return true;
+      } else {
+        return false;
+      }
     });
 
   const filteredBuses = (buses, start, destination) =>
@@ -31,7 +64,7 @@ const BusTimings = () => {
       (bus) => filteredSchedule(bus.schedule, start, destination).length > 0
     );
 
-  const sumbitForm = (e) => {
+  const sumbmitForm = (e) => {
     e.preventDefault();
 
     const start = from.value.trim().toUpperCase();
@@ -57,7 +90,7 @@ const BusTimings = () => {
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-2 p-5">
+      <div className="grid grid-cols-2 gap-6 p-5 border border-blue-200 m-2">
         <div>
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
             From
@@ -66,7 +99,7 @@ const BusTimings = () => {
             required
             type="text"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Vaduthala"
+            placeholder="High Court"
             onChange={(e) => (from.value = e.target.value)}
           />
         </div>
@@ -77,16 +110,16 @@ const BusTimings = () => {
           <input
             type="text"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Fort Kochi"
+            placeholder="Ernakulam South"
             required
             onChange={(e) => (to.value = e.target.value)}
           />
         </div>
-        <div className="pt-5">
+        <div className="pt-5 col-span-2 text-center">
           <button
             type="submit"
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            onClick={sumbitForm}
+            onClick={sumbmitForm}
           >
             Submit
           </button>
