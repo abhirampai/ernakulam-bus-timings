@@ -42,7 +42,7 @@ const Accordian = ({ header, body }) => {
                 expandClass.value,
             },
             {
-              "invisible -z-20": !expandClass.value,
+              "hidden": !expandClass.value,
             }
           )}
         >
