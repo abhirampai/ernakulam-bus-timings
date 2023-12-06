@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import Table from "./Table";
+import Accordian from "./Accordian";
 
 const Show = ({ number, routes, schedules }) => {
   const columns = useMemo(
@@ -17,17 +18,20 @@ const Show = ({ number, routes, schedules }) => {
     []
   );
 
-  return (
+  const header = () => (
+    <div className="flex">
+      <label className="text-white">Bus Number: </label>
+      <label className="text-white">{number}</label>
+    </div>
+  );
+
+  const body = () => (
     <>
       <div className="flex">
-        <label className="text-gray-900 dark:text-gray-300">Bus Number: </label>
-        <label className="text-gray-900 dark:text-gray-300">{number}</label>
-      </div>
-      <div className="flex">
-        <label className="text-gray-900 dark:text-gray-300">Bus Routes: </label>
+        <label className="text-white">Bus Routes: </label>
         <ol>
           {routes.map((route, idx) => (
-            <li key={idx} className="text-gray-900 dark:text-gray-300">
+            <li key={idx} className="text-white">
               {route}
             </li>
           ))}
@@ -39,12 +43,8 @@ const Show = ({ number, routes, schedules }) => {
           return (
             <div key={schedule.trip}>
               <div className="flex">
-                <label className="text-gray-900 dark:text-gray-300">
-                  Trip Number:{" "}
-                </label>
-                <label className="text-gray-900 dark:text-gray-300">
-                  {schedule.trip}
-                </label>
+                <label className="text-white">Trip Number: </label>
+                <label className="text-white">{schedule.trip}</label>
               </div>
               <div className="pt-2">
                 <Table data={schedule.stations} columns={columns} />
@@ -53,6 +53,12 @@ const Show = ({ number, routes, schedules }) => {
           );
         })}
       </div>
+    </>
+  );
+
+  return (
+    <>
+      <Accordian header={header()} body={body()} />
     </>
   );
 };
