@@ -1,6 +1,11 @@
 ### Ernakulam Bus Timings
 
-<img width="1417" alt="image" src="https://github.com/abhirampai/ernakulam-bus-timings/assets/36255896/f2d3a92d-57f4-4bd5-bb8b-6ba1d48a4f5b">
+### Light Mode
+<img width="1417" alt="image" src="https://github.com/abhirampai/ernakulam-bus-timings/assets/36255896/48233bd3-da7f-4dd9-b35d-d4b69e953614">
+
+
+### Dark Mode
+<img width="1417" alt="image" src="https://github.com/abhirampai/ernakulam-bus-timings/assets/36255896/73153401-1aec-4fc1-9ccd-acd671c3cba6">
 
 
 ### Refer
