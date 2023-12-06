@@ -7,7 +7,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="text-3xl font-bold">Ernakulam Bus Timings</div>
-      <div className="text-xl font-semibold p-5">Only Major bus stops documentated</div>
+      <div className="text-xl font-semibold p-5">Only Major bus stops documented</div>
       <BusTimings />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
