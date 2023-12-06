@@ -7,7 +7,7 @@ const BusTimings = () => {
   const { data, isLoading } = useGetBusData();
   const from = useSignal("");
   const to = useSignal("");
-  const filteredBusResult = useSignal({});
+  const filteredBusResult = useSignal(null);
 
   const filteredSchedule = (
     schedules,
@@ -92,12 +92,18 @@ const BusTimings = () => {
           </button>
         </div>
       </div>
-      {filteredBusResult.value.length > 0 && (
-        <List
-          buses={filteredBusResult.value}
-          filteredSchedule={filteredSchedule}
-        />
-      )}
+      {filteredBusResult.value &&
+        (filteredBusResult.value.length > 0 ? (
+          <List
+            buses={filteredBusResult.value}
+            filteredSchedule={filteredSchedule}
+          />
+        ) : (
+          from.value.trim() &&
+          to.value.trim() && (
+            <p className="text-xl p-5 text-center">No results found</p>
+          )
+        ))}
     </>
   );
 };
