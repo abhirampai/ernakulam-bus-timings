@@ -17,7 +17,7 @@ const Table = ({ data, columns }) => {
   });
 
   return (
-    <div className="p-2">
+    <div className="p-2 dark:text-gray-700">
       <div className="h-2" />
       <table className="p-5 w-full">
         <thead>
@@ -46,7 +46,7 @@ const Table = ({ data, columns }) => {
               <tr key={row.id}>
                 {row.getVisibleCells().map((cell) => {
                   return (
-                    <td key={cell.id}>
+                    <td key={cell.id} className="border">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

@@ -11,10 +11,10 @@ const List = ({ buses, filteredSchedule }) => {
   };
   return (
     <div className="p-5">
-      <div className="text-lg text-semibold text-center">
+      <div className="text-lg text-semibold text-center dark:text-gray-300">
         Found {buses.length} buses
       </div>
-      <div className="text-center">
+      <div className="text-center dark:text-gray-300">
         All results filtered based on current time:{" "}
         {new Date().toLocaleDateString(undefined, timeOptions)}
       </div>
