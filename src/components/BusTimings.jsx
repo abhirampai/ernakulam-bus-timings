@@ -70,7 +70,7 @@ const BusTimings = () => {
     const start = from.value.trim().toUpperCase();
     const destination = to.value.trim().toUpperCase();
 
-    const busSchedules = data?.data?.busSchedules;
+    const busSchedules = data?.busSchedules;
 
     const buses = busSchedules.filter((schedule) => {
       const touchingStartDestination =
@@ -98,6 +98,7 @@ const BusTimings = () => {
           <input
             required
             type="text"
+            list="routes"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="High Court"
             onChange={(e) => (from.value = e.target.value)}
@@ -109,6 +110,7 @@ const BusTimings = () => {
           </label>
           <input
             type="text"
+            list="routes"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Ernakulam South"
             required
@@ -137,6 +139,11 @@ const BusTimings = () => {
             <p className="text-xl p-5 text-center">No results found</p>
           )
         ))}
+      <datalist id="routes">
+        {data?.routes.map((route, key) => (
+          <option key={key} value={route} />
+        ))}
+      </datalist>
     </>
   );
 };
