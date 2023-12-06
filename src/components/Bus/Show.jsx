@@ -10,7 +10,7 @@ const Show = ({ number, routes, schedules }) => {
       },
       {
         header: "Arrival Time",
-        accessorKey: "departureTime",
+        accessorKey: "arrivalTime",
       },
       { header: "Departure Time", accessorKey: "departureTime" },
     ],
@@ -26,8 +26,10 @@ const Show = ({ number, routes, schedules }) => {
       <div className="flex">
         <label className="text-gray-900 dark:text-gray-300">Bus Routes: </label>
         <ol>
-          {routes.map((route) => (
-            <li className="text-gray-900 dark:text-gray-300">{route}</li>
+          {routes.map((route, idx) => (
+            <li key={idx} className="text-gray-900 dark:text-gray-300">
+              {route}
+            </li>
           ))}
         </ol>
       </div>
@@ -35,7 +37,7 @@ const Show = ({ number, routes, schedules }) => {
         <p className="text-xl">Bus Trips:</p>
         {schedules.map((schedule) => {
           return (
-            <>
+            <div key={schedule.trip}>
               <div className="flex">
                 <label className="text-gray-900 dark:text-gray-300">
                   Trip Number:{" "}
@@ -47,7 +49,7 @@ const Show = ({ number, routes, schedules }) => {
               <div className="pt-2">
                 <Table data={schedule.stations} columns={columns} />
               </div>
-            </>
+            </div>
           );
         })}
       </div>

@@ -71,7 +71,11 @@ const BusTimings = () => {
         </div>
       </div>
       {filteredBusResult.value.length > 0 && (
-        <List buses={filteredBusResult.value} />
+        <List
+          buses={filteredBusResult.value}
+          start={from.value.trim().toUpperCase()}
+          destination={to.value.trim().toUpperCase()}
+        />
       )}
     </>
   );
