@@ -51,6 +51,16 @@ export const filteredBuses = (buses, start, destination) =>
     (bus) => filteredSchedule(bus.schedule, start, destination).length > 0
   );
 
+export const filterByRoutes = (busSchedules, start, destination) =>
+  busSchedules.filter((schedule) => {
+    const touchingStartDestination =
+      schedule.route.filter((route) => route.includes(start)).length > 0;
+
+    const touchingEndDestination =
+      schedule.route.filter((route) => route.includes(destination)).length > 0;
+    return touchingStartDestination && touchingEndDestination;
+  });
+
 export const createAppState = () => {
   const from = signal("");
   const to = signal("");
