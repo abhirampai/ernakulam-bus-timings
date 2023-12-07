@@ -1,88 +1,48 @@
-import { useSignal } from "@preact/signals-react";
 import { List } from "./Bus";
+import { useContext } from "react";
+import {
+  AppState,
+  filterByRoutes,
+  filteredBuses,
+  sortBySchedule,
+} from "../hooks/utils";
+import { Loader } from "./common";
 
 const { useGetBusData } = require("../hooks/getBusData");
 
 const BusTimings = () => {
   const { data, isLoading } = useGetBusData();
-  const from = useSignal("");
-  const to = useSignal("");
-  const filteredBusResult = useSignal(null);
+  const {
+    from,
+    to,
+    filteredBusResult,
+    isLoading: isLoadingGlobal,
+  } = useContext(AppState);
 
-  const parseTime = (time) => {
-    const timeComponents = time.split(/[\s:]+/);
-    let hours = parseInt(timeComponents[0], 10);
-    const minutes = parseInt(timeComponents[1], 10);
-    const period = timeComponents[2].toLowerCase();
-
-    if (period === "pm" && hours < 12) {
-      hours += 12;
-    } else if (period === "am" && hours === 12) {
-      hours = 0;
-    }
-
-    const currentDate = new Date();
-    return new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      currentDate.getDate(),
-      hours,
-      minutes
-    );
-  };
-
-  const filteredSchedule = (
-    schedules,
-    start = from.value.trim().toUpperCase(),
-    destination = to.value.trim().toUpperCase()
-  ) =>
-    schedules.filter((schedule) => {
-      const touchingStartDestination = schedule.stations.find(
-        ({ station, arrivalTime }) =>
-          station.includes(start) && parseTime(arrivalTime) > new Date()
-      );
-
-      const touchingEndDestination = schedule.stations.find(({ station }) =>
-        station.includes(destination)
-      );
-
-      if (
-        touchingStartDestination?.arrivalTime <
-        touchingEndDestination?.arrivalTime
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    });
-
-  const filteredBuses = (buses, start, destination) =>
-    buses.filter(
-      (bus) => filteredSchedule(bus.schedule, start, destination).length > 0
-    );
-
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     e.preventDefault();
+    isLoadingGlobal.value = true;
 
     const start = from.value.trim().toUpperCase();
     const destination = to.value.trim().toUpperCase();
 
     const busSchedules = data?.busSchedules;
 
-    const buses = busSchedules.filter((schedule) => {
-      const touchingStartDestination =
-        schedule.route.filter((route) => route.includes(start)).length > 0;
-
-      const touchingEndDestination =
-        schedule.route.filter((route) => route.includes(destination)).length >
-        0;
-      return touchingStartDestination && touchingEndDestination;
-    });
-    filteredBusResult.value = filteredBuses(buses, start, destination);
+    filteredBusResult.value = await Promise.all(
+      sortBySchedule(
+        filteredBuses(
+          filterByRoutes(busSchedules, start, destination),
+          start,
+          destination
+        ),
+        start,
+        destination
+      )
+    ).finally(() => (isLoadingGlobal.value = false));
   };
 
   if (isLoading) {
-    return <p>Loading</p>;
+    return <Loader />;
   }
 
   return (
@@ -124,12 +84,12 @@ const BusTimings = () => {
           </button>
         </div>
       </div>
-      {filteredBusResult.value &&
+      {isLoadingGlobal.value ? (
+        <Loader />
+      ) : (
+        filteredBusResult.value &&
         (filteredBusResult.value.length > 0 ? (
-          <List
-            buses={filteredBusResult.value}
-            filteredSchedule={filteredSchedule}
-          />
+          <List buses={filteredBusResult.value} />
         ) : (
           from?.value?.trim() &&
           to?.value?.trim() && (
@@ -137,7 +97,8 @@ const BusTimings = () => {
               No results found.
             </p>
           )
-        ))}
+        ))
+      )}
       <datalist id="routes">
         {data?.routes.map((route, key) => (
           <option key={key} value={route} />

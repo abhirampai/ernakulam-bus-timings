@@ -1,6 +1,10 @@
+import { useContext } from "react";
+import { AppState, filteredSchedule } from "../../hooks/utils";
 import Show from "./Show";
 
-const List = ({ buses, filteredSchedule }) => {
+const List = ({ buses }) => {
+  const { from, to } = useContext(AppState);
+
   const timeOptions = {
     year: "numeric",
     month: "long",
@@ -23,7 +27,11 @@ const List = ({ buses, filteredSchedule }) => {
           key={idx}
           number={bus["Vehicle Number"]}
           routes={bus.route}
-          schedules={filteredSchedule(bus.schedule)}
+          schedules={filteredSchedule(
+            bus.schedule,
+            from.value.trim().toUpperCase(),
+            to.value.trim().toUpperCase()
+          )}
         />
       ))}
     </div>
