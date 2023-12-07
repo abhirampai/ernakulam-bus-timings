@@ -43,7 +43,7 @@ const Accordian = ({ header, body }) => {
           className={classNames(
             "h-auto max-h-0 items-center opacity-0 transition-all",
             {
-              "visible max-h-full opacity-100 duration-1000 border-t border-t-zinc-200":
+              "visible max-h-full opacity-100 duration-1000 border-t border-t-zinc-200 dark:border-t-black":
                 isAccordianOpen,
             },
             {

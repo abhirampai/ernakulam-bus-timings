@@ -84,8 +84,9 @@ export const createAppState = () => {
   const from = signal("");
   const to = signal("");
   const filteredBusResult = signal(null);
+  const isLoading = signal(false);
 
-  return { from, to, filteredBusResult };
+  return { from, to, filteredBusResult, isLoading };
 };
 
 export const AppState = createContext();

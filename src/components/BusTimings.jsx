@@ -6,34 +6,43 @@ import {
   filteredBuses,
   sortBySchedule,
 } from "../hooks/utils";
+import { Loader } from "./common";
 
 const { useGetBusData } = require("../hooks/getBusData");
 
 const BusTimings = () => {
   const { data, isLoading } = useGetBusData();
-  const { from, to, filteredBusResult } = useContext(AppState);
+  const {
+    from,
+    to,
+    filteredBusResult,
+    isLoading: isLoadingGlobal,
+  } = useContext(AppState);
 
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     e.preventDefault();
+    isLoadingGlobal.value = true;
 
     const start = from.value.trim().toUpperCase();
     const destination = to.value.trim().toUpperCase();
 
     const busSchedules = data?.busSchedules;
 
-    filteredBusResult.value = sortBySchedule(
-      filteredBuses(
-        filterByRoutes(busSchedules, start, destination),
+    filteredBusResult.value = await Promise.all(
+      sortBySchedule(
+        filteredBuses(
+          filterByRoutes(busSchedules, start, destination),
+          start,
+          destination
+        ),
         start,
         destination
-      ),
-      start,
-      destination
-    );
+      )
+    ).finally(() => (isLoadingGlobal.value = false));
   };
 
   if (isLoading) {
-    return <p>Loading</p>;
+    return <Loader />;
   }
 
   return (
@@ -75,7 +84,10 @@ const BusTimings = () => {
           </button>
         </div>
       </div>
-      {filteredBusResult.value &&
+      {isLoadingGlobal.value ? (
+        <Loader />
+      ) : (
+        filteredBusResult.value &&
         (filteredBusResult.value.length > 0 ? (
           <List buses={filteredBusResult.value} />
         ) : (
@@ -85,7 +97,8 @@ const BusTimings = () => {
               No results found.
             </p>
           )
-        ))}
+        ))
+      )}
       <datalist id="routes">
         {data?.routes.map((route, key) => (
           <option key={key} value={route} />

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import Table from "./Table";
-import Accordian from "./Accordian";
+import { Accordian } from "../common";
 
 const Show = ({ number, routes, schedules }) => {
   const columns = useMemo(
@@ -29,9 +29,12 @@ const Show = ({ number, routes, schedules }) => {
     <>
       <div className="flex gap-2 mt-2">
         <label className="text-white dark:text-gray-700">Bus Route: </label>
-        <ol className="border border-white dark:border-black">
+        <ol className="border border-x-white border-b-white dark:border-x-black dark:border-b-black">
           {routes.map((route, idx) => (
-            <li key={idx} className="text-white dark:text-gray-700 p-1 border-t">
+            <li
+              key={idx}
+              className="text-white dark:text-gray-700 p-1 border-t dark:border-t-black"
+            >
               {route}
             </li>
           ))}
