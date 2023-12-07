@@ -1,65 +1,12 @@
-import { useSignal } from "@preact/signals-react";
 import { List } from "./Bus";
+import { useContext } from "react";
+import { AppState, filteredBuses } from "../hooks/utils";
 
 const { useGetBusData } = require("../hooks/getBusData");
 
 const BusTimings = () => {
   const { data, isLoading } = useGetBusData();
-  const from = useSignal("");
-  const to = useSignal("");
-  const filteredBusResult = useSignal(null);
-
-  const parseTime = (time) => {
-    const timeComponents = time.split(/[\s:]+/);
-    let hours = parseInt(timeComponents[0], 10);
-    const minutes = parseInt(timeComponents[1], 10);
-    const period = timeComponents[2].toLowerCase();
-
-    if (period === "pm" && hours < 12) {
-      hours += 12;
-    } else if (period === "am" && hours === 12) {
-      hours = 0;
-    }
-
-    const currentDate = new Date();
-    return new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth(),
-      currentDate.getDate(),
-      hours,
-      minutes
-    );
-  };
-
-  const filteredSchedule = (
-    schedules,
-    start = from.value.trim().toUpperCase(),
-    destination = to.value.trim().toUpperCase()
-  ) =>
-    schedules.filter((schedule) => {
-      const touchingStartDestination = schedule.stations.find(
-        ({ station, arrivalTime }) =>
-          station.includes(start) && parseTime(arrivalTime) > new Date()
-      );
-
-      const touchingEndDestination = schedule.stations.find(({ station }) =>
-        station.includes(destination)
-      );
-
-      if (
-        touchingStartDestination?.arrivalTime <
-        touchingEndDestination?.arrivalTime
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    });
-
-  const filteredBuses = (buses, start, destination) =>
-    buses.filter(
-      (bus) => filteredSchedule(bus.schedule, start, destination).length > 0
-    );
+  const { from, to, filteredBusResult } = useContext(AppState);
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -126,10 +73,7 @@ const BusTimings = () => {
       </div>
       {filteredBusResult.value &&
         (filteredBusResult.value.length > 0 ? (
-          <List
-            buses={filteredBusResult.value}
-            filteredSchedule={filteredSchedule}
-          />
+          <List buses={filteredBusResult.value} />
         ) : (
           from?.value?.trim() &&
           to?.value?.trim() && (
