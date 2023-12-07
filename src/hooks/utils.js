@@ -31,7 +31,7 @@ export const filteredSchedule = (schedules, start, destination) =>
 
     const touchingStartDestination = schedule.stations.find(
       ({ station, arrivalTime }) =>
-        station.includes(start) && parseTime(arrivalTime) > new Date()
+        station.includes(start) && parseTime(arrivalTime) >= new Date()
     );
 
     const touchingEndDestination = schedule.stations.find(({ station }) =>
@@ -62,6 +62,23 @@ export const filterByRoutes = (busSchedules, start, destination) =>
       schedule.route.filter((route) => route.includes(destination)).length > 0;
     return touchingStartDestination && touchingEndDestination;
   });
+
+const findArrivalTime = (schedules, start, destination) =>
+  filteredSchedule(schedules, start, destination)
+    .map(({ stations }) =>
+      stations.find(
+        ({ station, arrivalTime }) =>
+          station.includes(start) && parseTime(arrivalTime) >= new Date()
+      )
+    )
+    .filter(Boolean)[0]?.arrivalTime;
+
+export const sortBySchedule = (buses, start, destination) =>
+  buses.sort(
+    (a, b) =>
+      parseTime(findArrivalTime(a.schedule, start, destination)) -
+      parseTime(findArrivalTime(b.schedule, start, destination))
+  );
 
 export const createAppState = () => {
   const from = signal("");

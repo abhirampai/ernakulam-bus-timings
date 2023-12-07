@@ -1,6 +1,11 @@
 import { List } from "./Bus";
 import { useContext } from "react";
-import { AppState, filterByRoutes, filteredBuses } from "../hooks/utils";
+import {
+  AppState,
+  filterByRoutes,
+  filteredBuses,
+  sortBySchedule,
+} from "../hooks/utils";
 
 const { useGetBusData } = require("../hooks/getBusData");
 
@@ -16,8 +21,12 @@ const BusTimings = () => {
 
     const busSchedules = data?.busSchedules;
 
-    filteredBusResult.value = filteredBuses(
-      filterByRoutes(busSchedules, start, destination),
+    filteredBusResult.value = sortBySchedule(
+      filteredBuses(
+        filterByRoutes(busSchedules, start, destination),
+        start,
+        destination
+      ),
       start,
       destination
     );
