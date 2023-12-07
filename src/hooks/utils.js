@@ -2,6 +2,8 @@ import { signal } from "@preact/signals-react";
 import { createContext } from "react";
 
 const parseTime = (time) => {
+  if (!time) return;
+
   const timeComponents = time.split(/[\s:]+/);
   let hours = parseInt(timeComponents[0], 10);
   const minutes = parseInt(timeComponents[1], 10);
@@ -37,8 +39,8 @@ export const filteredSchedule = (schedules, start, destination) =>
     );
 
     if (
-      touchingStartDestination?.arrivalTime <
-      touchingEndDestination?.arrivalTime
+      parseTime(touchingStartDestination?.arrivalTime) <
+      parseTime(touchingEndDestination?.arrivalTime)
     ) {
       return true;
     } else {

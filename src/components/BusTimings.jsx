@@ -16,8 +16,11 @@ const BusTimings = () => {
 
     const busSchedules = data?.busSchedules;
 
-    const buses = filterByRoutes(busSchedules, start, destination);
-    filteredBusResult.value = filteredBuses(buses, start, destination);
+    filteredBusResult.value = filteredBuses(
+      filterByRoutes(busSchedules, start, destination),
+      start,
+      destination
+    );
   };
 
   if (isLoading) {
