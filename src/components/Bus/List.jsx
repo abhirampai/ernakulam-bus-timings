@@ -28,18 +28,20 @@ const List = ({ buses }) => {
           time: new Date().toLocaleDateString(undefined, timeOptions),
         })}
       </div>
-      {buses.map((bus, idx) => (
-        <Show
-          key={idx}
-          number={bus["Vehicle Number"]}
-          routes={bus.route}
-          schedules={filteredSchedule(
-            bus.schedule,
-            from.value.trim().toUpperCase(),
-            to.value.trim().toUpperCase()
-          )}
-        />
-      ))}
+      <div className="pb-12">
+        {buses.map((bus, idx) => (
+          <Show
+            key={idx}
+            number={bus["Vehicle Number"]}
+            routes={bus.route}
+            schedules={filteredSchedule(
+              bus.schedule,
+              from.value.trim().toUpperCase(),
+              to.value.trim().toUpperCase()
+            )}
+          />
+        ))}
+      </div>
     </div>
   );
 };
