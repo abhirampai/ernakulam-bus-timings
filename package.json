@@ -43,6 +43,7 @@
     ]
   },
   "devDependencies": {
+    "json-loader": "^0.5.7",
     "tailwindcss": "^3.3.6"
   }
 }

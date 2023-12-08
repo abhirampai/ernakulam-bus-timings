@@ -1,0 +1,14 @@
+{
+  "common": {
+    "from": "From",
+    "to": "To",
+    "destination": "Destination",
+    "submit": "Submit",
+    "noResultsFound": "No results found."
+  },
+  "landingPageHeading": "Ernakulam Private Bus Timings",
+  "placeholder": {
+    "highCourt": "High Court",
+    "ernakulamSouth": "Ernakulam South"
+  }
+}
