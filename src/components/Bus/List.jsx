@@ -1,8 +1,13 @@
 import { useContext } from "react";
-import { AppState, filteredSchedule } from "../../hooks/utils";
+import {
+  AppState,
+  filteredSchedule,
+  useLocalizedTranslation,
+} from "../../hooks/utils";
 import Show from "./Show";
 
 const List = ({ buses }) => {
+  const { t } = useLocalizedTranslation();
   const { from, to } = useContext(AppState);
 
   const timeOptions = {
@@ -16,11 +21,12 @@ const List = ({ buses }) => {
   return (
     <div className="p-5">
       <div className="text-lg text-semibold text-center dark:text-gray-300">
-        Found {buses.length} buses
+        {t("busResults.foundHeading", { count: buses.length })}
       </div>
       <div className="text-center dark:text-gray-300">
-        All results filtered based on current time:{" "}
-        {new Date().toLocaleDateString(undefined, timeOptions)}
+        {t("busResults.resultsFilteredByTime", {
+          time: new Date().toLocaleDateString(undefined, timeOptions),
+        })}
       </div>
       {buses.map((bus, idx) => (
         <Show

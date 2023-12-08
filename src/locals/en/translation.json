@@ -10,5 +10,9 @@
   "placeholder": {
     "highCourt": "High Court",
     "ernakulamSouth": "Ernakulam South"
+  },
+  "busResults": {
+    "foundHeading": "Found {{count}} buses",
+    "resultsFilteredByTime": "All results filtered based on current time: {{time}}"
   }
 }
