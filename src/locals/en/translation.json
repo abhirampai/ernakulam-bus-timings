@@ -4,7 +4,9 @@
     "to": "To",
     "destination": "Destination",
     "submit": "Submit",
-    "noResultsFound": "No results found."
+    "noResultsFound": "No results found.",
+    "optional": "(Optional)",
+    "startAt": "Start at"
   },
   "landingPageHeading": "Ernakulam Private Bus Timings",
   "placeholder": {
@@ -13,7 +15,7 @@
   },
   "busResults": {
     "foundHeading": "Found {{count}} buses",
-    "resultsFilteredByTime": "All results filtered based on current time: {{time}}"
+    "resultsFilteredByTime": "All results filtered based on time: {{time}}"
   },
   "bus": {
     "number": "Bus number",

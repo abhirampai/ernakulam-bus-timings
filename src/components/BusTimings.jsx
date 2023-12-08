@@ -9,7 +9,7 @@ import {
 } from "hooks/utils";
 import { useGetBusData } from "hooks/getBusData";
 import { Footer, Loader } from "./common";
-import { TIME_OPTIONS } from "./common/constants";
+import moment from "moment";
 
 const BusTimings = () => {
   const { t } = useLocalizedTranslation();
@@ -17,6 +17,7 @@ const BusTimings = () => {
   const {
     from,
     to,
+    filterTime,
     filteredBusResult,
     isLoading: isLoadingGlobal,
   } = useContext(AppState);
@@ -27,18 +28,21 @@ const BusTimings = () => {
 
     const start = from.value.trim().toUpperCase();
     const destination = to.value.trim().toUpperCase();
+    const currentTime = moment(filterTime.value, "HH:mm").toDate();
 
     const busSchedules = data?.busSchedules;
 
     filteredBusResult.value = await Promise.all(
       sortBySchedule(
         filteredBuses(
-          filterByRoutes(busSchedules, start, destination),
+          filterByRoutes(busSchedules, start, destination, currentTime),
           start,
-          destination
+          destination,
+          currentTime
         ),
         start,
-        destination
+        destination,
+        currentTime
       )
     ).finally(() => (isLoadingGlobal.value = false));
   };
@@ -76,6 +80,20 @@ const BusTimings = () => {
             onChange={(e) => (to.value = e.target.value)}
           />
         </div>
+        <div>
+          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+            {t("common.startAt")} {t("common.optional")}
+          </label>
+          <input
+            type="time"
+            list="routes"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder={t("placeholder.ernakulamSouth")}
+            value={filterTime.value}
+            required
+            onChange={(e) => (filterTime.value = e.target.value)}
+          />
+        </div>
         <div className="pt-5 md:col-span-2 text-center">
           <button
             type="submit"
@@ -101,7 +119,7 @@ const BusTimings = () => {
               </p>
               <div className="text-center dark:text-gray-400">
                 {t("busResults.resultsFilteredByTime", {
-                  time: new Date().toLocaleDateString(undefined, TIME_OPTIONS),
+                  time: moment(filterTime, "HH:mm A").format("hh:mm A"),
                 })}
               </div>
             </div>
