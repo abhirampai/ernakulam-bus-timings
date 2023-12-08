@@ -3,7 +3,7 @@ import {
   AppState,
   filteredSchedule,
   useLocalizedTranslation,
-} from "../../hooks/utils";
+} from "hooks/utils";
 import Show from "./Show";
 
 const List = ({ buses }) => {

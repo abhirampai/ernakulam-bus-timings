@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Accordian, Table } from "../common";
-import { useLocalizedTranslation } from "../../hooks/utils";
+import { useLocalizedTranslation } from "hooks/utils";
 
 const Show = ({ number, routes, schedules }) => {
   const { t } = useLocalizedTranslation();

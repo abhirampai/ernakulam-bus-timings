@@ -6,10 +6,9 @@ import {
   filteredBuses,
   sortBySchedule,
   useLocalizedTranslation,
-} from "../hooks/utils";
+} from "hooks/utils";
+import { useGetBusData } from "hooks/getBusData";
 import { Loader } from "./common";
-
-const { useGetBusData } = require("../hooks/getBusData");
 
 const BusTimings = () => {
   const { t } = useLocalizedTranslation();
@@ -96,7 +95,7 @@ const BusTimings = () => {
           from?.value?.trim() &&
           to?.value?.trim() && (
             <p className="text-xl p-5 text-center dark:text-gray-400">
-             {t("common.noResultsFound")}
+              {t("common.noResultsFound")}
             </p>
           )
         ))

@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { removeDuplicatesAndSort } from "./utils";
-import { get } from "../api/bus";
+import { get } from "apis/bus";
 
 const useGetBusData = () =>
   useQuery("bus-timings", get, {
