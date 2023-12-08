@@ -1,5 +1,6 @@
 import { signal } from "@preact/signals-react";
 import { createContext } from "react";
+import { useTranslation } from "react-i18next";
 
 const parseTime = (time) => {
   if (!time) return;
@@ -24,6 +25,16 @@ const parseTime = (time) => {
     minutes
   );
 };
+
+const findArrivalTime = (schedules, start, destination) =>
+  filteredSchedule(schedules, start, destination)
+    .map(({ stations }) =>
+      stations.find(
+        ({ station, arrivalTime }) =>
+          station.includes(start) && parseTime(arrivalTime) >= new Date()
+      )
+    )
+    .filter(Boolean)[0]?.arrivalTime;
 
 export const filteredSchedule = (schedules, start, destination) =>
   schedules.filter((schedule) => {
@@ -63,16 +74,6 @@ export const filterByRoutes = (busSchedules, start, destination) =>
     return touchingStartDestination && touchingEndDestination;
   });
 
-const findArrivalTime = (schedules, start, destination) =>
-  filteredSchedule(schedules, start, destination)
-    .map(({ stations }) =>
-      stations.find(
-        ({ station, arrivalTime }) =>
-          station.includes(start) && parseTime(arrivalTime) >= new Date()
-      )
-    )
-    .filter(Boolean)[0]?.arrivalTime;
-
 export const sortBySchedule = (buses, start, destination) =>
   buses.sort(
     (a, b) =>
@@ -87,6 +88,16 @@ export const createAppState = () => {
   const isLoading = signal(false);
 
   return { from, to, filteredBusResult, isLoading };
+};
+
+export const removeDuplicatesAndSort = (arr) => {
+  return arr.filter((item, index) => arr.indexOf(item) === index).sort();
+};
+
+export const useLocalizedTranslation = () => {
+  const { t } = useTranslation();
+
+  return { t };
 };
 
 export const AppState = createContext();

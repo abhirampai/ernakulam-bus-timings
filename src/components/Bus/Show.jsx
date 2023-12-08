@@ -1,26 +1,29 @@
 import { useMemo } from "react";
-import Table from "./Table";
-import { Accordian } from "../common";
+import { Accordian, Table } from "../common";
+import { useLocalizedTranslation } from "hooks/utils";
 
 const Show = ({ number, routes, schedules }) => {
+  const { t } = useLocalizedTranslation();
   const columns = useMemo(
     () => [
       {
-        header: "Station",
+        header: t("columns.station"),
         accessorKey: "station",
       },
       {
-        header: "Arrival Time",
+        header: t("columns.arrivalTime"),
         accessorKey: "arrivalTime",
       },
-      { header: "Departure Time", accessorKey: "departureTime" },
+      { header: t("columns.departureTime"), accessorKey: "departureTime" },
     ],
-    []
+    [t]
   );
 
   const header = () => (
     <div className="flex text-xl gap-2">
-      <label className="text-white dark:text-gray-700">Bus Number: </label>
+      <label className="text-white dark:text-gray-700 capitalize">
+        {t("bus.number")}:{" "}
+      </label>
       <label className="text-white dark:text-gray-700">{number}</label>
     </div>
   );
@@ -28,7 +31,9 @@ const Show = ({ number, routes, schedules }) => {
   const body = () => (
     <>
       <div className="flex gap-2 mt-2">
-        <label className="text-white dark:text-gray-700">Bus Route: </label>
+        <label className="text-white dark:text-gray-700 capitalize">
+          {t("bus.route")}:{" "}
+        </label>
         <ol className="border border-x-white border-b-white dark:border-x-black dark:border-b-black">
           {routes.map((route, idx) => (
             <li
@@ -40,14 +45,14 @@ const Show = ({ number, routes, schedules }) => {
           ))}
         </ol>
       </div>
-      <div>
-        <p className="dark:text-gray-700">Bus Trips:</p>
+      <div className="pt-2">
+        <p className="dark:text-gray-700 capitalize">{t("bus.trips")}:</p>
         {schedules.map((schedule) => {
           return (
             <div key={schedule.trip}>
               <div className="flex">
                 <label className="text-white dark:text-gray-700">
-                  Trip Number:{" "}
+                  {t("bus.tripNumber")}:{" "}
                 </label>
                 <label className="text-white dark:text-gray-700">
                   {schedule.trip}
