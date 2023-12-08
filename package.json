@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "json-loader": "^0.5.7",
-    "tailwindcss": "^3.3.6"
+    "tailwindcss": "^3.3.6",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }

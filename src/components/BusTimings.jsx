@@ -8,7 +8,7 @@ import {
   useLocalizedTranslation,
 } from "hooks/utils";
 import { useGetBusData } from "hooks/getBusData";
-import { Loader } from "./common";
+import { Footer, Loader } from "./common";
 
 const BusTimings = () => {
   const { t } = useLocalizedTranslation();
@@ -105,6 +105,7 @@ const BusTimings = () => {
           <option key={key} value={route} />
         ))}
       </datalist>
+      <Footer />
     </>
   );
 };

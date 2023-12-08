@@ -16,7 +16,7 @@ const Accordian = ({ header, body }) => {
         className={classNames(
           "group flex flex-col gap-2 rounded-lg bg-black p-5 text-white dark:bg-gray-200 dark:text-gray-400 cursor-pointer",
           {
-            "overflow-scroll": isAccordianOpen,
+            "overflow-auto": isAccordianOpen,
           },
           {
             "overflow-hidden": !isAccordianOpen,
