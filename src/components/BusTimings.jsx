@@ -9,6 +9,7 @@ import {
 } from "hooks/utils";
 import { useGetBusData } from "hooks/getBusData";
 import { Footer, Loader } from "./common";
+import { TIME_OPTIONS } from "./common/constants";
 
 const BusTimings = () => {
   const { t } = useLocalizedTranslation();
@@ -94,9 +95,16 @@ const BusTimings = () => {
         ) : (
           from?.value?.trim() &&
           to?.value?.trim() && (
-            <p className="text-xl p-5 text-center dark:text-gray-400">
-              {t("common.noResultsFound")}
-            </p>
+            <div>
+              <p className="text-xl p-5 text-center dark:text-gray-400">
+                {t("common.noResultsFound")}
+              </p>
+              <div className="text-center dark:text-gray-400">
+                {t("busResults.resultsFilteredByTime", {
+                  time: new Date().toLocaleDateString(undefined, TIME_OPTIONS),
+                })}
+              </div>
+            </div>
           )
         ))
       )}

@@ -5,19 +5,12 @@ import {
   useLocalizedTranslation,
 } from "hooks/utils";
 import Show from "./Show";
+import { TIME_OPTIONS } from "components/common/constants";
 
 const List = ({ buses }) => {
   const { t } = useLocalizedTranslation();
   const { from, to } = useContext(AppState);
 
-  const timeOptions = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
-  };
   return (
     <div className="p-5">
       <div className="text-lg text-semibold text-center dark:text-gray-300">
@@ -25,7 +18,7 @@ const List = ({ buses }) => {
       </div>
       <div className="text-center dark:text-gray-300">
         {t("busResults.resultsFilteredByTime", {
-          time: new Date().toLocaleDateString(undefined, timeOptions),
+          time: new Date().toLocaleDateString(undefined, TIME_OPTIONS),
         })}
       </div>
       <div className="pb-12">
