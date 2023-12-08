@@ -1,17 +1,9 @@
-import axios from "axios";
 import { useQuery } from "react-query";
-
-const getBusTimings = () =>
-  axios.get(
-    "https://raw.githubusercontent.com/amith-vp/Kerala-Private-Bus-Timing/main/ernakulam.json"
-  );
-
-const removeDuplicatesAndSort = (arr) => {
-  return arr.filter((item, index) => arr.indexOf(item) === index).sort();
-};
+import { removeDuplicatesAndSort } from "./utils";
+import { get } from "../api/bus";
 
 const useGetBusData = () =>
-  useQuery("bus-timings", getBusTimings, {
+  useQuery("bus-timings", get, {
     select: ({ data }) => {
       return {
         busSchedules: data.busSchedules,
