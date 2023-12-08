@@ -1,8 +1,9 @@
 import { signal } from "@preact/signals-react";
+import moment from "moment";
 import { createContext } from "react";
 import { useTranslation } from "react-i18next";
 
-const parseTime = (time) => {
+const parseTime = (time, currentDate) => {
   if (!time) return;
 
   const timeComponents = time.split(/[\s:]+/);
@@ -16,7 +17,6 @@ const parseTime = (time) => {
     hours = 0;
   }
 
-  const currentDate = new Date();
   return new Date(
     currentDate.getFullYear(),
     currentDate.getMonth(),
@@ -26,23 +26,25 @@ const parseTime = (time) => {
   );
 };
 
-const findArrivalTime = (schedules, start, destination) =>
-  filteredSchedule(schedules, start, destination)
+const findArrivalTime = (schedules, start, destination, currentTime) =>
+  filteredSchedule(schedules, start, destination, currentTime)
     .map(({ stations }) =>
       stations.find(
         ({ station, arrivalTime }) =>
-          station.includes(start) && parseTime(arrivalTime) >= new Date()
+          station.includes(start) &&
+          parseTime(arrivalTime, currentTime) >= currentTime
       )
     )
     .filter(Boolean)[0]?.arrivalTime;
 
-export const filteredSchedule = (schedules, start, destination) =>
+export const filteredSchedule = (schedules, start, destination, currentTime) =>
   schedules.filter((schedule) => {
     if (!start && !destination) return false;
 
     const touchingStartDestination = schedule.stations.find(
       ({ station, arrivalTime }) =>
-        station.includes(start) && parseTime(arrivalTime) >= new Date()
+        station.includes(start) &&
+        parseTime(arrivalTime, currentTime) >= currentTime
     );
 
     const touchingEndDestination = schedule.stations.find(({ station }) =>
@@ -50,8 +52,8 @@ export const filteredSchedule = (schedules, start, destination) =>
     );
 
     if (
-      parseTime(touchingStartDestination?.arrivalTime) <
-      parseTime(touchingEndDestination?.arrivalTime)
+      parseTime(touchingStartDestination?.arrivalTime, currentTime) <
+      parseTime(touchingEndDestination?.arrivalTime, currentTime)
     ) {
       return true;
     } else {
@@ -59,9 +61,10 @@ export const filteredSchedule = (schedules, start, destination) =>
     }
   });
 
-export const filteredBuses = (buses, start, destination) =>
+export const filteredBuses = (buses, start, destination, currentTime) =>
   buses.filter(
-    (bus) => filteredSchedule(bus.schedule, start, destination).length > 0
+    (bus) =>
+      filteredSchedule(bus.schedule, start, destination, currentTime).length > 0
   );
 
 export const filterByRoutes = (busSchedules, start, destination) =>
@@ -74,20 +77,27 @@ export const filterByRoutes = (busSchedules, start, destination) =>
     return touchingStartDestination && touchingEndDestination;
   });
 
-export const sortBySchedule = (buses, start, destination) =>
+export const sortBySchedule = (buses, start, destination, currentTime) =>
   buses.sort(
     (a, b) =>
-      parseTime(findArrivalTime(a.schedule, start, destination)) -
-      parseTime(findArrivalTime(b.schedule, start, destination))
+      parseTime(
+        findArrivalTime(a.schedule, start, destination, currentTime),
+        currentTime
+      ) -
+      parseTime(
+        findArrivalTime(b.schedule, start, destination, currentTime),
+        currentTime
+      )
   );
 
 export const createAppState = () => {
   const from = signal("");
   const to = signal("");
+  const filterTime = signal(moment().format("HH:mm"));
   const filteredBusResult = signal(null);
   const isLoading = signal(false);
 
-  return { from, to, filteredBusResult, isLoading };
+  return { from, to, filteredBusResult, isLoading, filterTime };
 };
 
 export const removeDuplicatesAndSort = (arr) => {

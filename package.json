@@ -11,6 +11,7 @@
     "axios": "^1.6.2",
     "classnames": "^2.3.2",
     "i18next": "^23.7.8",
+    "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^13.5.0",
@@ -43,8 +44,8 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "json-loader": "^0.5.7",
-    "tailwindcss": "^3.3.6",
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "tailwindcss": "^3.3.6"
   }
 }

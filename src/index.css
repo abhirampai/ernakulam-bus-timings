@@ -47,8 +47,15 @@ td {
 }
 
 .expand-collapse-icon {
- @media (prefers-color-scheme: dark) {
-  filter: grayscale(100%);   
-  -webkit-filter: invert(100%);
- }
+  @media (prefers-color-scheme: dark) {
+    filter: grayscale(100%);
+    -webkit-filter: invert(100%);
+  }
+}
+@media (prefers-color-scheme: dark) {
+  input[type="time"]::-webkit-calendar-picker-indicator {
+    
+    filter: invert(100%);
+    -webkit-filter: invert(100%);
+  }
 }
