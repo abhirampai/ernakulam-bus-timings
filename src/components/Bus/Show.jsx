@@ -1,6 +1,5 @@
 import { useMemo } from "react";
-import Table from "./Table";
-import { Accordian } from "../common";
+import { Accordian, Table } from "../common";
 
 const Show = ({ number, routes, schedules }) => {
   const columns = useMemo(
