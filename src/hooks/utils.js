@@ -1,5 +1,6 @@
 import { signal } from "@preact/signals-react";
 import { createContext } from "react";
+import { useTranslation } from "react-i18next";
 
 const parseTime = (time) => {
   if (!time) return;
@@ -91,6 +92,12 @@ export const createAppState = () => {
 
 export const removeDuplicatesAndSort = (arr) => {
   return arr.filter((item, index) => arr.indexOf(item) === index).sort();
+};
+
+export const useLocalizedTranslation = () => {
+  const { t } = useTranslation();
+
+  return { t };
 };
 
 export const AppState = createContext();
