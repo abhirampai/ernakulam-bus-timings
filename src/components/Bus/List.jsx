@@ -2,6 +2,7 @@ import { useContext } from "react";
 import {
   AppState,
   filteredSchedule,
+  getCurrentTrip,
   useLocalizedTranslation,
 } from "hooks/utils";
 import Show from "./Show";
@@ -33,6 +34,7 @@ const List = ({ buses }) => {
               to.value.trim().toUpperCase(),
               moment(filterTime, "HH:mm").toDate()
             )}
+            currentTrip={getCurrentTrip(bus.schedule)}
           />
         ))}
       </div>

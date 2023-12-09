@@ -59,3 +59,15 @@ td {
     -webkit-filter: invert(100%);
   }
 }
+
+.progress-bar {
+  animation: progress 1.75s ease-in-out forwards;
+}
+
+@keyframes progress {
+  from{
+    width: 0;
+  }to {
+    width: 100%;
+  }   
+}

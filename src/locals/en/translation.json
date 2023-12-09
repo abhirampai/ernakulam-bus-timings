@@ -22,7 +22,9 @@
     "route": "Bus route",
     "schedule": "Bus schedule",
     "trips": "Bus trips",
-    "tripNumber": "Trip number"
+    "tripNumber": "Trip number",
+    "currentTrip": "Current trip",
+    "noTrip": "No current trip."
   },
   "columns": {
     "station": "Station",
