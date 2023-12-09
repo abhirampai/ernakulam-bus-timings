@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Accordian, Table } from "../common";
+import { Accordian, Progress, Table } from "../common";
 import { useLocalizedTranslation } from "hooks/utils";
 
 const Show = ({ number, routes, schedules }) => {
@@ -34,16 +34,7 @@ const Show = ({ number, routes, schedules }) => {
         <label className="text-white dark:text-gray-700 capitalize">
           {t("bus.route")}:{" "}
         </label>
-        <ol className="border border-x-white border-b-white dark:border-x-black dark:border-b-black">
-          {routes.map((route, idx) => (
-            <li
-              key={idx}
-              className="text-white dark:text-gray-700 p-1 border-t dark:border-t-black"
-            >
-              {route}
-            </li>
-          ))}
-        </ol>
+        <Progress items={routes} />
       </div>
       <div className="pt-2">
         <p className="dark:text-gray-700 capitalize">{t("bus.trips")}:</p>
