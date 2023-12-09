@@ -1,8 +1,10 @@
 import { useMemo } from "react";
-import { Accordian, Table } from "../common";
+import { Accordian, Progress, Table } from "../common";
 import { useLocalizedTranslation } from "hooks/utils";
+import moment from "moment";
 
-const Show = ({ number, routes, schedules }) => {
+const Show = ({ number, routes, schedules, currentTrip }) => {
+  console.log(currentTrip);
   const { t } = useLocalizedTranslation();
   const columns = useMemo(
     () => [
@@ -34,16 +36,27 @@ const Show = ({ number, routes, schedules }) => {
         <label className="text-white dark:text-gray-700 capitalize">
           {t("bus.route")}:{" "}
         </label>
-        <ol className="border border-x-white border-b-white dark:border-x-black dark:border-b-black">
-          {routes.map((route, idx) => (
-            <li
-              key={idx}
-              className="text-white dark:text-gray-700 p-1 border-t dark:border-t-black"
-            >
-              {route}
-            </li>
-          ))}
-        </ol>
+        <Progress
+          items={routes.map((route) => ({
+            name: route,
+          }))}
+        />
+      </div>
+      <div className="py-2">
+        <p className="dark:text-gray-700 capitalize">
+          {t("bus.currentTrip")}:{" "}
+        </p>
+        {currentTrip ? (
+          <Progress
+            items={currentTrip.map(({ station, arrivalTime }) => ({
+              name: station,
+              completed:
+                moment(arrivalTime, "HH:mm A").toDate() <= moment().toDate(),
+            }))}
+          />
+        ) : (
+          <p className="dark:text-gray-700">{t("bus.noTrip")}</p>
+        )}
       </div>
       <div className="pt-2">
         <p className="dark:text-gray-700 capitalize">{t("bus.trips")}:</p>
@@ -59,7 +72,9 @@ const Show = ({ number, routes, schedules }) => {
                 </label>
               </div>
               <div className="pt-2">
-                <Table data={schedule.stations} columns={columns} />
+                <>
+                  <Table data={schedule.stations} columns={columns} />
+                </>
               </div>
             </div>
           );
