@@ -34,7 +34,11 @@ const Show = ({ number, routes, schedules }) => {
         <label className="text-white dark:text-gray-700 capitalize">
           {t("bus.route")}:{" "}
         </label>
-        <Progress items={routes} />
+        <Progress
+          items={routes.map((route) => ({
+            name: route,
+          }))}
+        />
       </div>
       <div className="pt-2">
         <p className="dark:text-gray-700 capitalize">{t("bus.trips")}:</p>

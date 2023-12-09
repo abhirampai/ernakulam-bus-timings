@@ -10,7 +10,7 @@ const Progress = ({ items }) => {
                 <div className="bg-transparent border dark:border-gray-800 border-gray-200 rounded w-3 h-9" />
               )}
             </div>
-            <p className="text-sm dark:text-black">{item}</p>
+            <p className="text-sm dark:text-black">{item.name}</p>
           </div>
         ))}
       </div>
