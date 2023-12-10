@@ -9,12 +9,12 @@ const Progress = ({ items }) => {
             <div className="flex flex-col items-center">
               <div
                 className={classNames(
-                  " dark:bg-black text-xs leading-none p-1 text-center text-grey-darkest rounded-xl w-5 h-5",
+                  "text-xs leading-none p-1 text-center text-grey-darkest rounded-xl w-5 h-5",
                   {
                     "bg-green-500": item?.completed,
                   },
                   {
-                    "bg-white": !item?.completed,
+                    "bg-white dark:bg-black": !item?.completed,
                   }
                 )}
               />
