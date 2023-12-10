@@ -8,7 +8,7 @@ import {
   useLocalizedTranslation,
 } from "hooks/utils";
 import { useGetBusData } from "hooks/getBusData";
-import { Footer, Loader } from "./common";
+import { Footer, Github, Loader } from "./common";
 import moment from "moment";
 
 const BusTimings = () => {
@@ -132,6 +132,7 @@ const BusTimings = () => {
         ))}
       </datalist>
       <Footer />
+      <Github />
     </>
   );
 };
