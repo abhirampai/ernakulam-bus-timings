@@ -38,7 +38,7 @@ const Show = ({ number, routes, schedules, currentTrip }) => {
         </label>
         <Progress
           items={routes.map((route) => ({
-            name: route,
+            name: route.toLowerCase(),
           }))}
         />
       </div>
@@ -53,8 +53,8 @@ const Show = ({ number, routes, schedules, currentTrip }) => {
                 const tripCompleted =
                   moment(arrivalTime, "HH:mm A").toDate() <= moment().toDate();
                 const stationNameWithArrivalOrDeparture = tripCompleted
-                  ? `${station} reached at ${departureTime}`
-                  : `${station} will arrive at ${arrivalTime}`;
+                  ? `${station.toLowerCase()} reached at ${departureTime}`
+                  : `${station.toLowerCase()} will arrive at ${arrivalTime}`;
 
                 return {
                   name: stationNameWithArrivalOrDeparture,

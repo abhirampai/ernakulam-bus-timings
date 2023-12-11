@@ -32,7 +32,7 @@ const Progress = ({ items }) => {
                 />
               )}
             </div>
-            <p className="text-sm dark:text-black">{item.name}</p>
+            <p className="text-sm dark:text-black capitalize">{item.name}</p>
           </div>
         ))}
       </div>
