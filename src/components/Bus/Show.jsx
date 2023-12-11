@@ -48,11 +48,20 @@ const Show = ({ number, routes, schedules, currentTrip }) => {
         </p>
         {currentTrip ? (
           <Progress
-            items={currentTrip.map(({ station, arrivalTime }) => ({
-              name: station,
-              completed:
-                moment(arrivalTime, "HH:mm A").toDate() <= moment().toDate(),
-            }))}
+            items={currentTrip.map(
+              ({ station, arrivalTime, departureTime }) => {
+                const tripCompleted =
+                  moment(arrivalTime, "HH:mm A").toDate() <= moment().toDate();
+                const stationNameWithArrivalOrDeparture = tripCompleted
+                  ? `${station} reached at ${departureTime}`
+                  : `${station} will arrive at ${arrivalTime}`;
+
+                return {
+                  name: stationNameWithArrivalOrDeparture,
+                  completed: tripCompleted,
+                };
+              }
+            )}
           />
         ) : (
           <p className="dark:text-gray-700">{t("bus.noTrip")}</p>
