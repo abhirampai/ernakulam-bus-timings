@@ -27,7 +27,7 @@ const Accordian = ({ header, body }) => {
         onClick={onClickAccordian}
       >
         <div className="flex cursor-pointer items-center justify-between">
-          <span>{header}</span>
+          <span className="w-full">{header}</span>
           <img
             alt="expand or collapse button"
             src="https://upload.wikimedia.org/wikipedia/commons/9/96/Chevron-icon-drop-down-menu-WHITE.png"
