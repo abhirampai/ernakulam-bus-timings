@@ -11,6 +11,7 @@ const App = () => {
         {i18next.t("landingPageHeading")}
       </div>
       <BusTimings />
+      <div id="portal"></div>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
