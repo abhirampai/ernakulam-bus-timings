@@ -1,10 +1,12 @@
 import { useMemo } from "react";
-import { Accordian, Progress, Table } from "../common";
+import { Accordion, Modal, Progress, Table } from "../common";
 import { useLocalizedTranslation } from "hooks/utils";
 import moment from "moment";
+import { useSignal } from "@preact/signals-react";
+import ShowRoute from "./ShowRoute";
 
 const Show = ({ number, routes, schedules, currentTrip }) => {
-  console.log(currentTrip);
+  const openModal = useSignal(false);
   const { t } = useLocalizedTranslation();
   const columns = useMemo(
     () => [
@@ -22,26 +24,28 @@ const Show = ({ number, routes, schedules, currentTrip }) => {
   );
 
   const header = () => (
-    <div className="flex text-xl gap-2">
-      <label className="text-white dark:text-gray-700 capitalize">
-        {t("bus.number")}:{" "}
-      </label>
-      <label className="text-white dark:text-gray-700">{number}</label>
+    <div className="flex justify-between px-5 w-full items-center">
+      <div className="flex text-xl gap-2">
+        <label className="text-white dark:text-gray-700 capitalize">
+          {t("bus.number")}:{" "}
+        </label>
+        <label className="text-white dark:text-gray-700">{number}</label>
+      </div>
+      <button
+        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        onClick={(e) => {
+          e.stopPropagation();
+          openModal.value = true;
+          document.body.style.overflow = "hidden";
+        }}
+      >
+        Show route
+      </button>
     </div>
   );
 
   const body = () => (
     <>
-      <div className="flex gap-2 mt-2">
-        <label className="text-white dark:text-gray-700 capitalize">
-          {t("bus.route")}:{" "}
-        </label>
-        <Progress
-          items={routes.map((route) => ({
-            name: route.toLowerCase(),
-          }))}
-        />
-      </div>
       <div className="py-2">
         <p className="dark:text-gray-700 capitalize">
           {t("bus.currentTrip")}:{" "}
@@ -94,7 +98,16 @@ const Show = ({ number, routes, schedules, currentTrip }) => {
 
   return (
     <>
-      <Accordian header={header()} body={body()} />
+      <Accordion header={header()} body={body()} />
+      <Modal
+        open={openModal.value}
+        onCloseHandler={() => {
+          openModal.value = false;
+          document.body.style.overflow = "auto";
+        }}
+      >
+        <ShowRoute number={number} openModal={openModal} routes={routes} />
+      </Modal>
     </>
   );
 };
