@@ -2,12 +2,12 @@ import { useSignal } from "@preact/signals-react";
 import { useRef } from "react";
 import classNames from "classnames";
 
-const Accordian = ({ header, body }) => {
+const Accordion = ({ header, body }) => {
   const expandClass = useSignal(false);
-  const accordianRef = useRef(null);
-  const isAccordianOpen = expandClass.value;
-  const onClickAccordian = () => {
-    expandClass.value = isAccordianOpen ? false : true;
+  const accordionRef = useRef(null);
+  const isAccordionOpen = expandClass.value;
+  const onClickAccordion = () => {
+    expandClass.value = isAccordionOpen ? false : true;
   };
 
   return (
@@ -16,15 +16,15 @@ const Accordian = ({ header, body }) => {
         className={classNames(
           "group flex flex-col gap-2 rounded-lg bg-black p-5 text-white dark:bg-gray-200 dark:text-gray-400 cursor-pointer",
           {
-            "overflow-auto": isAccordianOpen,
+            "overflow-auto": isAccordionOpen,
           },
           {
-            "overflow-hidden": !isAccordianOpen,
+            "overflow-hidden": !isAccordionOpen,
           }
         )}
         tabIndex="1"
-        ref={accordianRef}
-        onClick={onClickAccordian}
+        ref={accordionRef}
+        onClick={onClickAccordion}
       >
         <div className="flex cursor-pointer items-center justify-between">
           <span className="w-full">{header}</span>
@@ -34,7 +34,7 @@ const Accordian = ({ header, body }) => {
             className={classNames(
               "h-2 w-3 transition-all duration-500 expand-collapse-icon",
               {
-                "-rotate-180": isAccordianOpen,
+                "-rotate-180": isAccordionOpen,
               }
             )}
           />
@@ -44,10 +44,10 @@ const Accordian = ({ header, body }) => {
             "h-auto max-h-0 items-center opacity-0 transition-all",
             {
               "visible max-h-full opacity-100 duration-1000 border-t border-t-zinc-200 dark:border-t-black":
-                isAccordianOpen,
+                isAccordionOpen,
             },
             {
-              "invisible -z-10 h-0": !isAccordianOpen,
+              "invisible -z-10 h-0": !isAccordionOpen,
             }
           )}
         >
@@ -58,4 +58,4 @@ const Accordian = ({ header, body }) => {
   );
 };
 
-export default Accordian;
+export default Accordion;
