@@ -1,12 +1,11 @@
 ### Ernakulam Bus Timings
+<img width="1440" alt="Screenshot 2023-12-14 at 3 37 27 PM" src="https://github.com/abhirampai/ernakulam-bus-timings/assets/36255896/7e1069c2-cd22-4414-95b4-497d8e0e0deb">
 
-### Light Mode
-<img width="1440" alt="image" src="https://github.com/abhirampai/ernakulam-bus-timings/assets/36255896/61579836-8337-45ac-80b2-03773880e8d4">
+### Bus Schedule
+<img width="1386" alt="image" src="https://github.com/abhirampai/ernakulam-bus-timings/assets/36255896/f36ac715-461d-4906-b6c0-5f32d84e6afe">
 
-
-
-### Dark Mode
-<img width="1440" alt="Screenshot 2023-12-06 at 7 56 20 PM" src="https://github.com/abhirampai/ernakulam-bus-timings/assets/36255896/ad0653ba-c16b-427d-8eec-f974086a00db">
+### Current Trip
+<img width="1386" alt="Screenshot 2023-12-14 at 3 37 01 PM" src="https://github.com/abhirampai/ernakulam-bus-timings/assets/36255896/607d54a0-0652-4211-9139-b333b9d85c52">
 
 
 ### Refer
