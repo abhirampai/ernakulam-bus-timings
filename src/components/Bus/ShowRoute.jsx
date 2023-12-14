@@ -1,7 +1,8 @@
 import { Progress } from "components/common";
 import { useLocalizedTranslation } from "hooks/utils";
+import moment from "moment";
 
-const ShowRoute = ({ number, openModal, routes }) => {
+const ShowRoute = ({ number, openModal, currentTrip }) => {
   const { t } = useLocalizedTranslation();
   return (
     <div className="absolute z-50 w-1/4 overflow-hidden text-left bg-black dark:bg-white border rounded-sm">
@@ -36,16 +37,29 @@ const ShowRoute = ({ number, openModal, routes }) => {
             </svg>
           </button>
         </div>
-        <div className="flex gap-2 mt-2">
-          <label className="text-white dark:text-gray-700 capitalize">
-            {t("bus.route")}:{" "}
-          </label>
+        <p className="text-white dark:text-gray-700 capitalize">
+          {t("bus.currentTrip")}:{" "}
+        </p>
+        {currentTrip ? (
           <Progress
-            items={routes.map((route) => ({
-              name: route.toLowerCase(),
-            }))}
+            items={currentTrip.map(
+              ({ station, arrivalTime, departureTime }) => {
+                const tripCompleted =
+                  moment(arrivalTime, "HH:mm A").toDate() <= moment().toDate();
+                const stationNameWithArrivalOrDeparture = tripCompleted
+                  ? `${station.toLowerCase()} reached at ${departureTime}`
+                  : `${station.toLowerCase()} will arrive at ${arrivalTime}`;
+
+                return {
+                  name: stationNameWithArrivalOrDeparture,
+                  completed: tripCompleted,
+                };
+              }
+            )}
           />
-        </div>
+        ) : (
+          <p className="dark:text-gray-700">{t("bus.noTrip")}</p>
+        )}
       </div>
     </div>
   );

@@ -25,7 +25,8 @@
     "trips": "Bus trips",
     "tripNumber": "Trip number",
     "currentTrip": "Current trip",
-    "noTrip": "No current trip."
+    "noTrip": "No current trip.",
+    "showTrip": "Show current trip"
   },
   "columns": {
     "station": "Station",

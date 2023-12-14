@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import { Accordion, Modal, Progress, Table } from "../common";
 import { useLocalizedTranslation } from "hooks/utils";
-import moment from "moment";
 import { useSignal } from "@preact/signals-react";
 import ShowRoute from "./ShowRoute";
 
@@ -39,37 +38,22 @@ const Show = ({ number, routes, schedules, currentTrip }) => {
           document.body.style.overflow = "hidden";
         }}
       >
-        Show route
+        {t("bus.showTrip")}
       </button>
     </div>
   );
 
   const body = () => (
     <>
-      <div className="py-2">
-        <p className="dark:text-gray-700 capitalize">
-          {t("bus.currentTrip")}:{" "}
-        </p>
-        {currentTrip ? (
-          <Progress
-            items={currentTrip.map(
-              ({ station, arrivalTime, departureTime }) => {
-                const tripCompleted =
-                  moment(arrivalTime, "HH:mm A").toDate() <= moment().toDate();
-                const stationNameWithArrivalOrDeparture = tripCompleted
-                  ? `${station.toLowerCase()} reached at ${departureTime}`
-                  : `${station.toLowerCase()} will arrive at ${arrivalTime}`;
-
-                return {
-                  name: stationNameWithArrivalOrDeparture,
-                  completed: tripCompleted,
-                };
-              }
-            )}
-          />
-        ) : (
-          <p className="dark:text-gray-700">{t("bus.noTrip")}</p>
-        )}
+      <div className="flex gap-2 mt-2">
+        <label className="text-white dark:text-gray-700 capitalize">
+          {t("bus.route")}:{" "}
+        </label>
+        <Progress
+          items={routes.map((route) => ({
+            name: route.toLowerCase(),
+          }))}
+        />
       </div>
       <div className="pt-2">
         <p className="dark:text-gray-700 capitalize">{t("bus.trips")}:</p>
@@ -106,7 +90,11 @@ const Show = ({ number, routes, schedules, currentTrip }) => {
           document.body.style.overflow = "auto";
         }}
       >
-        <ShowRoute number={number} openModal={openModal} routes={routes} />
+        <ShowRoute
+          number={number}
+          openModal={openModal}
+          currentTrip={currentTrip}
+        />
       </Modal>
     </>
   );
