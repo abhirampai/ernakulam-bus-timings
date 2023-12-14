@@ -30,16 +30,18 @@ const List = ({ buses }) => {
           time: moment(filterTime, "HH:mm A").format("hh:mm A"),
         })}
       </div>
-      <div className="text-start dark:text-gray-300 p-5">
-        <Trans
-          i18nKey="busResults.nextBusToDestination"
-          values={{
-            destination: to.value.trim(),
-            time: moment(nextBusArrivalTime, "HH:mm A").format("hh:mm A"),
-          }}
-          components={{ bold: <strong /> }}
-        />
-      </div>
+      {nextBusArrivalTime && (
+        <div className="text-start dark:text-gray-300 p-5">
+          <Trans
+            i18nKey="busResults.nextBusToDestination"
+            values={{
+              destination: to.value.trim(),
+              time: moment(nextBusArrivalTime, "HH:mm A").format("hh:mm A"),
+            }}
+            components={{ bold: <strong /> }}
+          />
+        </div>
+      )}
       <div className="pb-12">
         {buses.map((bus, idx) => (
           <Show
