@@ -53,7 +53,7 @@ const BusTimings = () => {
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-5 border border-blue-200 m-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-5 border border-blue-200 m-5">
         <div>
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
             {t("common.from")}
