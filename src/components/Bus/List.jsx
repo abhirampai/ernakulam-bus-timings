@@ -3,14 +3,22 @@ import {
   AppState,
   filteredSchedule,
   getCurrentTrip,
+  getNextTripArrivalTime,
   useLocalizedTranslation,
 } from "hooks/utils";
 import Show from "./Show";
 import moment from "moment";
+import { Trans } from "react-i18next";
 
 const List = ({ buses }) => {
   const { t } = useLocalizedTranslation();
   const { from, to, filterTime } = useContext(AppState);
+  const nextBusArrivalTime = getNextTripArrivalTime(
+    buses[0],
+    from,
+    to,
+    filterTime
+  );
 
   return (
     <div className="p-5">
@@ -21,6 +29,16 @@ const List = ({ buses }) => {
         {t("busResults.resultsFilteredByTime", {
           time: moment(filterTime, "HH:mm A").format("hh:mm A"),
         })}
+      </div>
+      <div className="text-start dark:text-gray-300 p-5">
+        <Trans
+          i18nKey="busResults.nextBusToDestination"
+          values={{
+            destination: to.value.trim(),
+            time: moment(nextBusArrivalTime, "HH:mm A").format("hh:mm A"),
+          }}
+          components={{ bold: <strong /> }}
+        />
       </div>
       <div className="pb-12">
         {buses.map((bus, idx) => (

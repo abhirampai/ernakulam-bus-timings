@@ -5,7 +5,7 @@ import moment from "moment";
 const ShowRoute = ({ number, openModal, currentTrip }) => {
   const { t } = useLocalizedTranslation();
   return (
-    <div className="absolute z-50 w-1/4 overflow-hidden text-left bg-black dark:bg-white border rounded-sm">
+    <div className="absolute z-50 w-11/12 md:w-1/2 overflow-hidden text-left bg-black dark:bg-white border rounded-sm">
       <div className="my-5 overflow-y-auto"></div>
       <div className="flex flex-col w-full px-8 pb-6 space-y-6">
         <div className="flex w-full justify-between">
