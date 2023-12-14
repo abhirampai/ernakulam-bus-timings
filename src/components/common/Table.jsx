@@ -17,7 +17,7 @@ const Table = ({ data, columns }) => {
   });
 
   return (
-    <div className="p-2 dark:text-gray-700">
+    <div className="p-2 text-sm md:text-xl dark:text-gray-700">
       <div className="h-2" />
       <table className="p-5 w-full dark:border-black">
         <thead>
