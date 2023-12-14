@@ -91,6 +91,21 @@ export const getCurrentTrip = (schedules) =>
       schedule.stations.some(
         ({ arrivalTime }) => parseTime(arrivalTime) <= moment().toDate()
       )
-    )?.pop()?.stations;
+    )
+    ?.pop()?.stations;
+
+export const getNextTripArrivalTime = (bus, from, to, filterTime) =>
+  filteredSchedule(
+    bus.schedule,
+    from.value.trim().toUpperCase(),
+    to.value.trim().toUpperCase(),
+    moment(filterTime, "HH:mm").toDate()
+  )
+    .map(({ stations }) =>
+      stations.filter(({ station }) =>
+        station.includes(from.value.trim().toUpperCase())
+      )
+    )
+    .flat()[0].arrivalTime;
 
 export const AppState = createContext();

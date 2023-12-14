@@ -3,6 +3,7 @@ import {
   AppState,
   filteredSchedule,
   getCurrentTrip,
+  getNextTripArrivalTime,
   useLocalizedTranslation,
 } from "hooks/utils";
 import Show from "./Show";
@@ -12,18 +13,12 @@ import { Trans } from "react-i18next";
 const List = ({ buses }) => {
   const { t } = useLocalizedTranslation();
   const { from, to, filterTime } = useContext(AppState);
-  const nextBusArrivalTime = filteredSchedule(
-    buses[0].schedule,
-    from.value.trim().toUpperCase(),
-    to.value.trim().toUpperCase(),
-    moment(filterTime, "HH:mm").toDate()
-  )
-    .map(({ stations }) =>
-      stations.filter(({ station }) =>
-        station.includes(from.value.trim().toUpperCase())
-      )
-    )
-    .flat()[0].arrivalTime;
+  const nextBusArrivalTime = getNextTripArrivalTime(
+    buses[0],
+    from,
+    to,
+    filterTime
+  );
 
   return (
     <div className="p-5">
