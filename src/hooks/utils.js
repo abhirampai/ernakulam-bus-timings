@@ -106,6 +106,6 @@ export const getNextTripArrivalTime = (bus, from, to, filterTime) =>
         station.includes(from.value.trim().toUpperCase())
       )
     )
-    .flat()[0].arrivalTime;
+    .flat()[0]?.arrivalTime;
 
 export const AppState = createContext();
