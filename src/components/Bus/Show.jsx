@@ -23,7 +23,7 @@ const Show = ({ number, routes, schedules, currentTrip }) => {
   );
 
   const header = () => (
-    <div className="flex justify-between md:px-5 px-2 w-full items-center">
+    <div className="flex justify-between md:pr-5 pr-2 w-full items-center">
       <div className="flex flex-col md:flex-row md:text-xl gap-2">
         <label className="text-white dark:text-gray-700 capitalize">
           {t("bus.number")}:{" "}
