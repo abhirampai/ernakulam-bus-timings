@@ -30,7 +30,7 @@
     "showTrip": "Show current trip",
     "reachedAt": "reached at",
     "willArriveAt": "will arrive at",
-    "estimatedTripTime": "Estimated trip time {{time}} minutes"
+    "estimatedTripTime": "Estimated trip time: {{time}} minutes"
   },
   "columns": {
     "station": "Station",

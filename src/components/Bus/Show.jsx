@@ -67,7 +67,7 @@ const Show = ({ number, routes, schedules, currentTrip }) => {
           return (
             <div key={schedule.trip}>
               <div className="flex">
-                <div className="flex justify-between w-full">
+                <div className="flex flex-col md:flex-row justify-between w-full">
                   <label className="text-white dark:text-gray-700">
                     {t("bus.tripNumber")}: {schedule.trip}
                   </label>
