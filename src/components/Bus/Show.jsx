@@ -1,12 +1,18 @@
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
 import { Accordion, Modal, Progress, Table } from "../common";
-import { useLocalizedTranslation } from "hooks/utils";
+import {
+  AppState,
+  findArrivalTimeBasedOnLocation,
+  getTripEstimatedTime,
+  useLocalizedTranslation,
+} from "hooks/utils";
 import { useSignal } from "@preact/signals-react";
 import ShowRoute from "./ShowRoute";
 
 const Show = ({ number, routes, schedules, currentTrip }) => {
   const openModal = useSignal(false);
   const { t } = useLocalizedTranslation();
+  const { from, to } = useContext(AppState);
   const columns = useMemo(
     () => [
       {
@@ -61,9 +67,24 @@ const Show = ({ number, routes, schedules, currentTrip }) => {
           return (
             <div key={schedule.trip}>
               <div className="flex">
-                <label className="text-white dark:text-gray-700">
-                  {t("bus.tripNumber")}:{" "}
-                </label>
+                <div className="flex justify-between">
+                  <label className="text-white dark:text-gray-700">
+                    {t("bus.tripNumber")}:{" "}
+                  </label>
+                  <p>
+                    Trip time -{" "}
+                    {getTripEstimatedTime(
+                      findArrivalTimeBasedOnLocation(
+                        schedule.stations,
+                        from.value.trim().toUpperCase()
+                      ),
+                      findArrivalTimeBasedOnLocation(
+                        schedule.stations,
+                        to.value.trim().toUpperCase()
+                      )
+                    )}
+                  </p>
+                </div>
                 <label className="text-white dark:text-gray-700">
                   {schedule.trip}
                 </label>
