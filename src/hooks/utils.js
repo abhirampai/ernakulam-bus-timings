@@ -76,6 +76,20 @@ export const sortBySchedule = (buses, start, destination, currentTime) =>
       parseTime(findArrivalTime(b.schedule, start, destination, currentTime))
   );
 
+export const getTripProgress = (currentTrip) =>
+  currentTrip.map(({ station, arrivalTime, departureTime }) => {
+    const currentTime = moment();
+    const tripCompleted = moment(arrivalTime, "HH:mm A") <= currentTime;
+    const stationName = station.toLowerCase();
+    const stationStatus = tripCompleted ? "reached at" : "will arrive at";
+    const scheduleTime = tripCompleted ? departureTime : arrivalTime;
+
+    return {
+      name: `${stationName} ${stationStatus} ${scheduleTime}`,
+      completed: tripCompleted,
+    };
+  });
+
 export const createAppState = () => {
   const from = signal("");
   const to = signal("");
