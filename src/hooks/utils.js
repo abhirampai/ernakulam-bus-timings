@@ -1,4 +1,5 @@
 import { signal } from "@preact/signals-react";
+import i18n from "i18n";
 import moment from "moment";
 import { createContext } from "react";
 import { useTranslation } from "react-i18next";
@@ -81,7 +82,9 @@ export const getTripProgress = (currentTrip) =>
     const currentTime = moment();
     const tripCompleted = moment(arrivalTime, "HH:mm A") <= currentTime;
     const stationName = station.toLowerCase();
-    const stationStatus = tripCompleted ? "reached at" : "will arrive at";
+    const stationStatus = tripCompleted
+      ? i18n.t("bus.reachedAt")
+      : i18n.t("bus.willArriveAt");
     const scheduleTime = tripCompleted ? departureTime : arrivalTime;
 
     return {

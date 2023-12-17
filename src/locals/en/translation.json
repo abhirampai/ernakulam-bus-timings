@@ -27,7 +27,9 @@
     "tripNumber": "Trip number",
     "currentTrip": "Current trip",
     "noTrip": "No current trip.",
-    "showTrip": "Show current trip"
+    "showTrip": "Show current trip",
+    "reachedAt": "reached at",
+    "willArriveAt": "will arrive at"
   },
   "columns": {
     "station": "Station",
