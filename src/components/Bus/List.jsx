@@ -35,6 +35,7 @@ const List = ({ buses }) => {
           <Trans
             i18nKey="busResults.nextBusToDestination"
             values={{
+              start: from.value.trim(),
               destination: to.value.trim(),
               time: moment(nextBusArrivalTime, "HH:mm A").format("hh:mm A"),
             }}

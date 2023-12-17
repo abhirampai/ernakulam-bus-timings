@@ -17,7 +17,7 @@
   "busResults": {
     "foundHeading": "Found {{count}} buses",
     "resultsFilteredByTime": "All results filtered based on time: {{time}}",
-    "nextBusToDestination": "Next bus to <strong>{{destination}}</strong> at: <strong>{{time}}</strong>"
+    "nextBusToDestination": "Next bus to <strong>{{destination}}</strong> from <strong>{{start}}</strong> at: <strong>{{time}}</strong>"
   },
   "bus": {
     "number": "Bus number",
