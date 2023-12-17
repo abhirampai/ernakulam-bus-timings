@@ -67,27 +67,25 @@ const Show = ({ number, routes, schedules, currentTrip }) => {
           return (
             <div key={schedule.trip}>
               <div className="flex">
-                <div className="flex justify-between">
+                <div className="flex justify-between w-full">
                   <label className="text-white dark:text-gray-700">
-                    {t("bus.tripNumber")}:{" "}
+                    {t("bus.tripNumber")}: {schedule.trip}
                   </label>
                   <p>
-                    Trip time -{" "}
-                    {getTripEstimatedTime(
-                      findArrivalTimeBasedOnLocation(
-                        schedule.stations,
-                        from.value.trim().toUpperCase()
+                    {t("bus.estimatedTripTime", {
+                      time: getTripEstimatedTime(
+                        findArrivalTimeBasedOnLocation(
+                          schedule.stations,
+                          from.value.trim().toUpperCase()
+                        ),
+                        findArrivalTimeBasedOnLocation(
+                          schedule.stations,
+                          to.value.trim().toUpperCase()
+                        )
                       ),
-                      findArrivalTimeBasedOnLocation(
-                        schedule.stations,
-                        to.value.trim().toUpperCase()
-                      )
-                    )}
+                    })}
                   </p>
                 </div>
-                <label className="text-white dark:text-gray-700">
-                  {schedule.trip}
-                </label>
               </div>
               <div className="pt-2">
                 <>
