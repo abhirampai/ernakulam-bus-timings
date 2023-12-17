@@ -121,4 +121,13 @@ export const getNextTripArrivalTime = (bus, from, to, filterTime) =>
     )
     .flat()[0]?.arrivalTime;
 
+export const findArrivalTimeBasedOnLocation = (schedules, location) =>
+  schedules.find(({ station }) => station.includes(location))?.arrivalTime;
+
+export const getTripEstimatedTime = (startTime, destinationTime) =>
+  moment(moment(destinationTime, "HH:mm")).diff(
+    moment(startTime, "HH:mm"),
+    "minutes"
+  );
+
 export const AppState = createContext();
