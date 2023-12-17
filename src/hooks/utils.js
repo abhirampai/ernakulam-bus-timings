@@ -39,6 +39,12 @@ export const filteredSchedule = (schedules, start, destination, currentTime) =>
     );
   });
 
+export const filteredBuses = (buses, start, destination, currentTime) =>
+  buses.filter(
+    (bus) =>
+      filteredSchedule(bus.schedule, start, destination, currentTime).length > 0
+  );
+
 export const filterByRoutes = (busSchedules, start, destination) =>
   busSchedules.filter((schedule) =>
     schedule.route.some(
