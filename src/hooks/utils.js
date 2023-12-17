@@ -32,31 +32,42 @@ export const filteredSchedule = (schedules, start, destination, currentTime) =>
       station.includes(destination)
     );
 
-    if (
+    return (
       parseTime(touchingStartDestination?.arrivalTime) <
       parseTime(touchingEndDestination?.arrivalTime)
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+    );
   });
-
-export const filteredBuses = (buses, start, destination, currentTime) =>
-  buses.filter(
-    (bus) =>
-      filteredSchedule(bus.schedule, start, destination, currentTime).length > 0
-  );
 
 export const filterByRoutes = (busSchedules, start, destination) =>
-  busSchedules.filter((schedule) => {
-    const touchingStartDestination =
-      schedule.route.filter((route) => route.includes(start)).length > 0;
+  busSchedules.filter((schedule) =>
+    schedule.route.some(
+      (route) => route.includes(start) && route.includes(destination)
+    )
+  );
 
-    const touchingEndDestination =
-      schedule.route.filter((route) => route.includes(destination)).length > 0;
-    return touchingStartDestination && touchingEndDestination;
-  });
+export const getCurrentTrip = (schedules) =>
+  schedules.find((schedule) =>
+    schedule.stations.some(
+      ({ arrivalTime }) => parseTime(arrivalTime) <= moment().toDate()
+    )
+  )?.stations;
+
+export const getNextTripArrivalTime = (bus, from, to, filterTime) => {
+  const filteredStations = filteredSchedule(
+    bus.schedule,
+    from.value.trim().toUpperCase(),
+    to.value.trim().toUpperCase(),
+    moment(filterTime, "HH:mm").toDate()
+  );
+
+  const matchingStations = filteredStations.flatMap(({ stations }) =>
+    stations.filter(({ station }) =>
+      station.includes(from.value.trim().toUpperCase())
+    )
+  );
+
+  return matchingStations[0]?.arrivalTime;
+};
 
 export const sortBySchedule = (buses, start, destination, currentTime) =>
   buses.sort(
@@ -75,37 +86,13 @@ export const createAppState = () => {
   return { from, to, filteredBusResult, isLoading, filterTime };
 };
 
-export const removeDuplicatesAndSort = (arr) => {
-  return arr.filter((item, index) => arr.indexOf(item) === index).sort();
-};
+export const removeDuplicatesAndSort = (arr) =>
+  arr.filter((item, index) => arr.indexOf(item) === index).sort();
 
 export const useLocalizedTranslation = () => {
   const { t } = useTranslation();
 
   return { t };
 };
-
-export const getCurrentTrip = (schedules) =>
-  schedules
-    .filter((schedule) =>
-      schedule.stations.some(
-        ({ arrivalTime }) => parseTime(arrivalTime) <= moment().toDate()
-      )
-    )
-    ?.pop()?.stations;
-
-export const getNextTripArrivalTime = (bus, from, to, filterTime) =>
-  filteredSchedule(
-    bus.schedule,
-    from.value.trim().toUpperCase(),
-    to.value.trim().toUpperCase(),
-    moment(filterTime, "HH:mm").toDate()
-  )
-    .map(({ stations }) =>
-      stations.filter(({ station }) =>
-        station.includes(from.value.trim().toUpperCase())
-      )
-    )
-    .flat()[0]?.arrivalTime;
 
 export const AppState = createContext();
