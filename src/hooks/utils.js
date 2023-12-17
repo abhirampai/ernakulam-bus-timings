@@ -1,4 +1,5 @@
 import { signal } from "@preact/signals-react";
+import i18n from "i18n";
 import moment from "moment";
 import { createContext } from "react";
 import { useTranslation } from "react-i18next";
@@ -32,14 +33,10 @@ export const filteredSchedule = (schedules, start, destination, currentTime) =>
       station.includes(destination)
     );
 
-    if (
+    return (
       parseTime(touchingStartDestination?.arrivalTime) <
       parseTime(touchingEndDestination?.arrivalTime)
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+    );
   });
 
 export const filteredBuses = (buses, start, destination, currentTime) =>
@@ -64,6 +61,22 @@ export const sortBySchedule = (buses, start, destination, currentTime) =>
       parseTime(findArrivalTime(a.schedule, start, destination, currentTime)) -
       parseTime(findArrivalTime(b.schedule, start, destination, currentTime))
   );
+
+export const getTripProgress = (currentTrip) =>
+  currentTrip.map(({ station, arrivalTime, departureTime }) => {
+    const currentTime = moment();
+    const tripCompleted = moment(arrivalTime, "HH:mm A") <= currentTime;
+    const stationName = station.toLowerCase();
+    const stationStatus = tripCompleted
+      ? i18n.t("bus.reachedAt")
+      : i18n.t("bus.willArriveAt");
+    const scheduleTime = tripCompleted ? departureTime : arrivalTime;
+
+    return {
+      name: `${stationName} ${stationStatus} ${scheduleTime}`,
+      completed: tripCompleted,
+    };
+  });
 
 export const createAppState = () => {
   const from = signal("");

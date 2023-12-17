@@ -1,6 +1,5 @@
 import { Progress } from "components/common";
-import { useLocalizedTranslation } from "hooks/utils";
-import moment from "moment";
+import { getTripProgress, useLocalizedTranslation } from "hooks/utils";
 
 const ShowRoute = ({ number, openModal, currentTrip }) => {
   const { t } = useLocalizedTranslation();
@@ -41,22 +40,7 @@ const ShowRoute = ({ number, openModal, currentTrip }) => {
           {t("bus.currentTrip")}:{" "}
         </p>
         {currentTrip ? (
-          <Progress
-            items={currentTrip.map(
-              ({ station, arrivalTime, departureTime }) => {
-                const tripCompleted =
-                  moment(arrivalTime, "HH:mm A").toDate() <= moment().toDate();
-                const stationNameWithArrivalOrDeparture = tripCompleted
-                  ? `${station.toLowerCase()} reached at ${departureTime}`
-                  : `${station.toLowerCase()} will arrive at ${arrivalTime}`;
-
-                return {
-                  name: stationNameWithArrivalOrDeparture,
-                  completed: tripCompleted,
-                };
-              }
-            )}
-          />
+          <Progress items={getTripProgress(currentTrip)} />
         ) : (
           <p className="dark:text-gray-700">{t("bus.noTrip")}</p>
         )}
