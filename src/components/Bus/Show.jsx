@@ -71,7 +71,7 @@ const Show = ({ number, routes, schedules, currentTrip }) => {
                   <label className="text-white dark:text-gray-700">
                     {t("bus.tripNumber")}: {schedule.trip}
                   </label>
-                  <p>
+                  <p className="text-white dark:text-gray-700">
                     {t("bus.estimatedTripTime", {
                       time: getTripEstimatedTime(
                         findArrivalTimeBasedOnLocation(
