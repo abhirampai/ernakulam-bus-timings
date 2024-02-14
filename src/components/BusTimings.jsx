@@ -1,5 +1,5 @@
 import { List } from "./Bus";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import {
   AppState,
   filterByRoutes,
@@ -10,6 +10,7 @@ import {
 import { useGetBusData } from "hooks/getBusData";
 import { Footer, Github, Loader } from "./common";
 import moment from "moment";
+import classNames from "classnames";
 
 const BusTimings = () => {
   const { t } = useLocalizedTranslation();
@@ -21,6 +22,8 @@ const BusTimings = () => {
     filteredBusResult,
     isLoading: isLoadingGlobal,
   } = useContext(AppState);
+  const sharedLinkDisabled = !filteredBusResult?.value?.length && true;
+  const urlParams = new URLSearchParams(window.location.search);
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -47,6 +50,23 @@ const BusTimings = () => {
     ).finally(() => (isLoadingGlobal.value = false));
   };
 
+  const copyToClipboard = () => {
+    const url = `${window.location.origin}?from=${from.value
+      .trim()
+      .toUpperCase()}&to=${to.value.trim().toUpperCase()}&time=${
+      filterTime.value
+    }`;
+    navigator.clipboard
+      .writeText(url)
+      .then(() => alert(`Copied ${url} to clipboard successfully`));
+  };
+
+  useEffect(() => {
+    from.value = urlParams.get("from") || "";
+    to.value = urlParams.get("to") || "";
+    filterTime.value = urlParams.get("time") || moment().format("HH:mm");
+  }, []); //eslint-disable-line
+
   if (isLoading) {
     return <Loader />;
   }
@@ -60,6 +80,7 @@ const BusTimings = () => {
           </label>
           <input
             required
+            defaultValue={urlParams.get("from") || ""}
             type="text"
             list="routes"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -73,6 +94,7 @@ const BusTimings = () => {
           </label>
           <input
             type="text"
+            defaultValue={urlParams.get("to") || ""}
             list="routes"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder={t("placeholder.ernakulamSouth")}
@@ -89,18 +111,33 @@ const BusTimings = () => {
             list="routes"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder={t("placeholder.ernakulamSouth")}
-            value={filterTime.value}
+            defaultValue={urlParams.get("time") || moment().format("HH:mm")}
             required
             onChange={(e) => (filterTime.value = e.target.value)}
           />
         </div>
-        <div className="pt-5 md:col-span-2 text-center">
+        <div className="md:col-span-2 flex space-x-5 justify-center col-span-2 items-center w-full">
           <button
             type="submit"
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             onClick={submitForm}
           >
             {t("common.submit")}
+          </button>
+          <button
+            disabled={sharedLinkDisabled}
+            className={classNames(
+              "text-sm w-full sm:w-auto px-5 py-2.5 text-center font-medium rounded-lg focus:outline-none",
+              {
+                "text-white bg-gray-300 cursor-not-allowed disabled:opacity-25":
+                  sharedLinkDisabled,
+                "text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800":
+                  !sharedLinkDisabled,
+              }
+            )}
+            onClick={copyToClipboard}
+          >
+            {t("common.copyLink")}
           </button>
         </div>
       </div>
